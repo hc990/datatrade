@@ -19,7 +19,7 @@ public class LoginController extends ActionSupport implements ModelDriven<User> 
 		// TODO Auto-generated method stub
 		String username = user.getUsername();
 		String password = user.getPassword();
-		
+	 
 	
 		
 		return SUCCESS;

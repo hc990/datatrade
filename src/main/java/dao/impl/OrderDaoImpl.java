@@ -18,14 +18,14 @@ public class OrderDaoImpl implements OrderDao {
 	private HibernateTemplate hibernateTemplate;	
 	
 
-	public HibernateTemplate getHibernateTemplate() {
-		return hibernateTemplate;
-	}
-
-
-	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
-		this.hibernateTemplate = hibernateTemplate;
-	}
+//	public HibernateTemplate getHibernateTemplate() {
+//		return hibernateTemplate;
+//	}
+//
+//
+//	public void setHibernateTemplate(HibernateTemplate hibernateTemplate) {
+//		this.hibernateTemplate = hibernateTemplate;
+//	}
 
 	@Override
 	public List<Order> getOrders(User user) {

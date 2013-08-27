@@ -1,30 +1,19 @@
 package main.java.service.impl;
 
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import main.java.dao.OrderDao;
 import main.java.domain.Order;
 import main.java.service.OrderService;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService{
 
 	
 	/**
-	 * 处理后台数据接口
+	 * 
 	 * */
 	private OrderDao orderDao;
-
-	public OrderDao getOrderDao() {
-		return orderDao;
-	}
-
-	@Resource(name = "orderDao")  
-	public void setOrderDao(OrderDao orderDao) {
-		this.orderDao = orderDao;
-	}
 
 	@Override
 	public Order saveOrder(long id) {

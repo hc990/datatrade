@@ -15,14 +15,16 @@ public class CommodityDaoImpl implements CommodityDao {
 	@Autowired
 	private HibernateTemplate hibernateTemplate;
 
-	public HibernateTemplate getHibernateTemplate() {
-		return hibernateTemplate;
-	}
-
 	@Override
 	public void saveCommodity(Commodity commodity) {
 		// TODO Auto-generated method stub
-		hibernateTemplate.saveOrUpdate(commodity);
+		try {
+			hibernateTemplate.saveOrUpdate(commodity);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
