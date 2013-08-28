@@ -1,10 +1,16 @@
 package main.java.controller;
 
 import main.java.domain.User;
+import main.java.service.UserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
+@Scope("prototype")
 public class LoginController extends ActionSupport implements ModelDriven<User> {
 	
 	/**
@@ -12,16 +18,20 @@ public class LoginController extends ActionSupport implements ModelDriven<User> 
 	 */
 	private static final long serialVersionUID = -2843710489038468506L;
 	
+	@Autowired
+	UserService userService;
+	
 	User user = new User();
 	
 	@Override
 	public String execute() throws Exception {	
 		// TODO Auto-generated method stub
-		String username = user.getUsername();
-		String password = user.getPassword();
-	 
-	
-		
+		User dbuser = userService.getUser(user.getUsername());
+		if(dbuser.getPassword()!=null&&user.getPassword().equals(dbuser.getPassword())){
+			ActionContext.getContext().getSession().put("",user.getUsername());  
+		}else{
+			return LOGIN;
+		}
 		return SUCCESS;
 	}
 	

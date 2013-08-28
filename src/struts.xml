@@ -2,15 +2,19 @@
 <!DOCTYPE struts PUBLIC
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
-
 <struts>
 	<!-- For the purposes of the book, we will leave devMode set to true. This 
 		allows several things to occur including provision of debugging level information 
 		on error pages as well as reloading of various resources with each request. -->
 	<constant name="struts.devMode" value="true" />
-	<constant name="struts.multipart.saveDir" value="/home/huangchong"></constant>  
-	<constant name="struts.objectFactory" value="org.apache.struts2.spring.StrutsSpringObjectFactory"></constant>
- 		<!-- You can define packages directly in this file, but its probably best 
+	<constant name="struts.multipart.saveDir" value="/home/huangchong"></constant>
+	<constant name="struts.objectFactory"
+		value="org.apache.struts2.spring.StrutsSpringObjectFactory"></constant>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.i18n.reload" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.action.extension" value="do,action,," />
+	<!-- You can define packages directly in this file, but its probably best 
 		to modularize the configuration files with separate xml files for each package. 
 		Ulitmately its all the same because the include element, seen below, pulls 
 		the included configuration document directly in to the primary document. 
@@ -23,37 +27,29 @@
 		the specific examples or chapters, its just a kind of utility for the whole 
 		application. -->
 	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="isLogin"
+				class="main.java.Interceptor.LoginedInterceptor">
+			</interceptor>
+			<interceptor-stack name="needLogined">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authority" />
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
 		<action name="Menu">
 			<result>/menu/Menu.jsp</result>
 		</action>
-
-
-		<!-- The package element provides a mechanism by which to group related 
-			Struts 2 components, such as actions and results, into logical units. In 
-			this case, we will group them based upon their relationship as that pertain 
-			to the same chapter in the book. A more natural grouping for real world applications 
-			would be by more functional aspects. -->
-
-		<!-- This is just the jsp page that presents the initial form to collect 
-			the users name for building a customized greeting. A pass through action 
-			mapping, used to wire a direct JSP request throught he Struts 2 system. This 
-			is recommended as a best practice for a variety of reasons including architectural 
-			consistency and a logical naming buffer between the request namespace and 
-			the actual jsp locations. -->
-	    <action name="Name">
+		<action name="Name">
 			<result>/NameCollector.jsp</result>
 		</action>
-
-
-		<!-- The HelloWorld action will create a custom greeting from the submitted 
-			form data. The HelloWorld action also declares a result to use for displaying 
-			the customized greeting, a jsp page in this case. -->
-			
-		<action name="HelloWorld" class="hello" >
+		<action name="HelloWorld" class="hello">
 			<result name="SUCCESS">/HelloWorld.jsp</result>
-			<result name="input">/menu/Menu.jsp</result>  
+			<result name="input">/menu/Menu.jsp</result>
+			<interceptor-ref name="needLogined" />  
 		</action>
-		
 		<action name="upload" class="upload">
 			<result name="SUCCESS">/HelloWorld.jsp</result>
 			<result name="input">/menu/Menu.jsp</result>

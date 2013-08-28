@@ -12,8 +12,8 @@ http://cxf.apache.org/jaxws
 http://cxf.apache.org/schemas/jaxws.xsd">
 	<bean id="hello" class="main.java.controller.HelloWorld" scope="prototype"></bean>
 	<bean id="upload" class="main.java.controller.Upload" scope="prototype"></bean>
-	<context:annotation-config />
-	<context:component-scan base-package="main.java" />
+	<context:component-scan base-package="main.java.service" />
+	<context:component-scan base-package="main.java.dao" />
 	<bean name="jdbsProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">

@@ -7,7 +7,6 @@ import main.java.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,15 +18,15 @@ import com.opensymphony.xwork2.ModelDriven;
  * makes that custom message available for the result to which it forwards.  
  */
 
-@Controller
-@Scope("prototype")  
-public class HelloWorld extends ActionSupport implements ModelDriven<User>{
+
+@Scope("prototype")
+public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 
 	User u = new User();
-	
+
 	@Autowired
 	OrderService orderService;
-	
+
 	@Autowired
 	CommodityService commodityService;
 	/**
@@ -63,8 +62,8 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User>{
 		commodity.setWeight(231);
 		commodityService.signupCommodity(commodity);
 		System.out.println(u.getUsername());
-//		Order u = orderService.saveOrder(1);
-//		setCustomGreeting(GREETING + u.getAddress());
+		// Order u = orderService.saveOrder(1);
+		// setCustomGreeting(GREETING + u.getAddress());
 
 		/*
 		 * Our simplistic busines logic doesn't have any sense of failure, so we
@@ -74,10 +73,10 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User>{
 		return "SUCCESS";
 	}
 
-//	public void validate() {
-//		System.out.println(getText("customGreeting.exists"));
-//		addFieldError("name", getText("customGreeting.exists"));
-//	}
+	// public void validate() {
+	// System.out.println(getText("customGreeting.exists"));
+	// addFieldError("name", getText("customGreeting.exists"));
+	// }
 
 	/*
 	 * Definition of Java Bean properties includes a field, getter and setter
@@ -85,16 +84,16 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User>{
 	 * mechanisms of Struts2.
 	 */
 
-//	private String name;
-//
-//	public String getName() {
-//		return name;
-//	}
-//
-//	public void setName(String name) {
-//		this.name = name;
-//	}
-//
+	// private String name;
+	//
+	// public String getName() {
+	// return name;
+	// }
+	//
+	// public void setName(String name) {
+	// this.name = name;
+	// }
+	//
 	private String customGreeting;
 
 	public String getCustomGreeting() {
@@ -104,7 +103,6 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User>{
 	public void setCustomGreeting(String customGreeting) {
 		this.customGreeting = customGreeting;
 	}
-	
 
 	@Override
 	public User getModel() {
