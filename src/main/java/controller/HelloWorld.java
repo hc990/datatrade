@@ -1,15 +1,16 @@
-package main.java.controller;
-
-import main.java.domain.Commodity;
-import main.java.domain.User;
-import main.java.service.CommodityService;
-import main.java.service.OrderService;
+package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import service.CommodityService;
+import service.OrderService;
+
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
+import domain.Commodity;
+import domain.User;
 
 /* 
  * Hello World Action for chapter one.  This Action expects to receive a 

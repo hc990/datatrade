@@ -1,11 +1,11 @@
-package main.java.dao.impl;
+package dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
-import main.java.dao.UserDao;
-import main.java.domain.User;
+import dao.UserDao;
+import domain.User;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {

@@ -1,10 +1,10 @@
-package main.java.service.impl;
-
-import main.java.dao.OrderDao;
-import main.java.domain.Order;
-import main.java.service.OrderService;
+package service.impl;
 
 import org.springframework.stereotype.Service;
+
+import service.OrderService;
+import dao.OrderDao;
+import domain.Order;
 
 @Service
 public class OrderServiceImpl implements OrderService{

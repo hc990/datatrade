@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- For the purposes of the book, we will leave devMode set to true. This 
+		allows several things to occur including provision of debugging level information 
+		on error pages as well as reloading of various resources with each request. -->
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.multipart.saveDir" value="/home/huangchong"></constant>
+	<constant name="struts.objectFactory"
+		value="org.apache.struts2.spring.StrutsSpringObjectFactory"></constant>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.i18n.reload" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<constant name="struts.action.extension" value="do,action,," />
+	<!-- You can define packages directly in this file, but its probably best 
+		to modularize the configuration files with separate xml files for each package. 
+		Ulitmately its all the same because the include element, seen below, pulls 
+		the included configuration document directly in to the primary document. 
+		The only thing to consider is that a referenced element must have been declared 
+		above the referring element. -->
+
+	<!-- This is the menu action that will allow the reader to see the different 
+		samples actions from the different chapters in a menu format. We declare 
+		it here, in the root namespace, because its not really related to any of 
+		the specific examples or chapters, its just a kind of utility for the whole 
+		application. -->
+	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="isLogin"
+				class="main.java.Interceptor.LoginedInterceptor">
+			</interceptor>
+			<interceptor-stack name="needLogined">
+				<interceptor-ref name="defaultStack" />
+				<!-- <interceptor-ref name="authority" /> -->
+			</interceptor-stack>
+		</interceptors>
+		<global-results>
+			<result name="login">/login.jsp</result>
+		</global-results>
+		<action name="Menu">
+			<result>/menu/Menu.jsp</result>
+		</action>
+		<action name="Name">
+			<result>/NameCollector.jsp</result>
+		</action>
+		<action name="HelloWorld" class="hello">
+			<result name="SUCCESS">/HelloWorld.jsp</result>
+			<result name="input">/menu/Menu.jsp</result>
+			<interceptor-ref name="needLogined" />  
+		</action>
+		<action name="upload" class="upload">
+			<result name="SUCCESS">/HelloWorld.jsp</result>
+			<result name="input">/menu/Menu.jsp</result>
+		</action>
+	</package>
+</struts>

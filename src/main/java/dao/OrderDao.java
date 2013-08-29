@@ -1,9 +1,9 @@
-package main.java.dao;
+package dao;
 
 import java.util.List;
 
-import main.java.domain.Order;
-import main.java.domain.User;
+import domain.Order;
+import domain.User;
 
 public interface OrderDao {
 	 long saveOrder(Order order);

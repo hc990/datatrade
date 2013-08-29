@@ -1,6 +1,4 @@
-package test.java;
 
-import main.java.Hello;
 
 import org.junit.Test;
 

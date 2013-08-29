@@ -1,8 +1,8 @@
-package main.java.dao;
+package dao;
 
 import java.util.List;
 
-import main.java.domain.Commodity;
+import domain.Commodity;
 
 public interface CommodityDao {
 	void saveCommodity(Commodity commodity);

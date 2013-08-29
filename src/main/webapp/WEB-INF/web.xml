@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The web.xml, also known as the deployment descriptor, defines a Java Servlet web application. 
+		 This document is a mandatory element of any web application and must reside within WEB-INF.  The 
+		 deployment descriptor defines all the servlets and servlet filters that belong to this web
+		 application. -->
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>trade</display-name>
+		<!-- Declaration of the Struts 2 filter.  Since our entire web application will be a Struts 2
+					application, we will not have any other servlets or filters.  Of course, real Struts 2 
+					applications may also have other servlets or filters, but since we are doing only Struts 2
+					stuff in this example, we need only define the Struts 2 filter.  -->
+	 <filter>  
+  			<filter-name>CharacterEncoding</filter-name>  
+   			  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
+     		    <init-param>  
+                     <param-name>encoding</param-name>  
+                     <param-value>Utf-8</param-value>  
+                </init-param>  
+                <init-param>  
+        	 		 <param-name>forceEncoding</param-name>  
+        			 <param-value>true</param-value>  
+         		</init-param>  
+    </filter>
+    <filter-mapping>  
+          <filter-name>CharacterEncoding</filter-name>  
+          <url-pattern>/*</url-pattern>  
+    </filter-mapping>
+    <filter> 
+        <filter-name>openSessionInView</filter-name> 
+        <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class> 
+         <init-param> 
+            <param-name>sessionFactoryBeanName</param-name>  
+            <param-value>sessionFactory</param-value>  
+        </init-param>    
+    </filter>
+    <filter-mapping>   
+    <filter-name>openSessionInView</filter-name> 
+        <url-pattern>/*</url-pattern> 
+    </filter-mapping> 		 
+    <filter>
+        <filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+   </filter>
+   <!-- The Struts 2 filter should be mapped to ALL requests coming into the web application.  As a filter,
+				 it can let the non-struts requests pass through and they will arrive at which ever servlets to which
+				 they may be mapped.  Of course, this sample app has no other servlets, so we expect the filter to catch 
+				 everything.  When the filter recognizes a Struts 2 request, typically by the .action extension, the 
+				 normal filter chaining of a web application is aborted and the request is completely handled by
+				 the Struts 2 system. -->
+    <filter-mapping>
+        <filter-name>struts2</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener> 
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class> 
+    </listener>
+   <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:applicationContext.xml
+		</param-value>
+	</context-param>
+    <context-param> 
+        <param-name>log4jConfigLocation</param-name> 
+        <param-value>/WEB-INF/classes/log4j.properties</param-value> 
+    </context-param>
+    <listener> 
+        <listener-class> 
+            org.springframework.web.util.Log4jConfigListener 
+        </listener-class> 
+ </listener> 
+</web-app>

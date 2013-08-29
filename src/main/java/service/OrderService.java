@@ -1,6 +1,6 @@
-package main.java.service;
+package service;
 
-import main.java.domain.Order;
+import domain.Order;
 
 
 public interface OrderService {

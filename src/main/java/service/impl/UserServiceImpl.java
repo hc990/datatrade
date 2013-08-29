@@ -1,12 +1,12 @@
-package main.java.service.impl;
+package service.impl;
 
 import javax.annotation.Resource;
 
-import main.java.dao.OrderDao;
-import main.java.domain.Order;
-import main.java.domain.User;
-
 import org.springframework.stereotype.Service;
+
+import dao.OrderDao;
+import domain.Order;
+import domain.User;
 
 @Service
 public class UserServiceImpl {

@@ -1,14 +1,15 @@
-package main.java.controller;
-
-import main.java.domain.User;
-import main.java.service.UserService;
+package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import service.UserService;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+
+import domain.User;
 
 @Scope("prototype")
 public class LoginController extends ActionSupport implements ModelDriven<User> {

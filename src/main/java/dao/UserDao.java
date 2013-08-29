@@ -1,6 +1,6 @@
-package main.java.dao;
+package dao;
 
-import main.java.domain.User;
+import domain.User;
 
 public interface UserDao {
 	User getUser(User user);
