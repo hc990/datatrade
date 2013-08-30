@@ -1,11 +1,11 @@
-package main.java.service.impl;
-
-import main.java.dao.CommodityDao;
-import main.java.domain.Commodity;
-import main.java.service.CommodityService;
+package service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import service.CommodityService;
+import dao.CommodityDao;
+import domain.Commodity;
 
 @Service
 public class CommodityServiceImpl implements CommodityService {

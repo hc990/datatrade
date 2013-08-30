@@ -1,6 +1,6 @@
-package main.java.service;
+package service;
 
-import main.java.domain.Commodity;
+import domain.Commodity;
 
 public interface CommodityService {
 	void signupCommodity(Commodity commodity);

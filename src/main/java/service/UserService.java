@@ -1,8 +1,8 @@
-package main.java.service;
-
-import main.java.domain.User;
+package service;
 
 import org.springframework.stereotype.Service;
+
+import domain.User;
 
 @Service
 public interface UserService {

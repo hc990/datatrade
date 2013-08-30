@@ -1,4 +1,4 @@
-package main.java;
+
 
 public class Hello {
 	public void hello(String name){

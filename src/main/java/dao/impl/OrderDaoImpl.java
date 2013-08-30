@@ -1,14 +1,14 @@
-package main.java.dao.impl;
+package dao.impl;
 
 import java.util.List;
-
-import main.java.dao.OrderDao;
-import main.java.domain.Order;
-import main.java.domain.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
+
+import dao.OrderDao;
+import domain.Order;
+import domain.User;
 
 @Repository("orderDao")
 public class OrderDaoImpl implements OrderDao {
