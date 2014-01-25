@@ -13,7 +13,7 @@
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<constant name="struts.i18n.reload" value="true" />
 	<constant name="struts.configuration.xml.reload" value="true" />
-	<constant name="struts.action.extension" value="do,action,," />
+	<constant name="struts.action.extension" value="do,action," />
 	<!-- You can define packages directly in this file, but its probably best 
 		to modularize the configuration files with separate xml files for each package. 
 		Ulitmately its all the same because the include element, seen below, pulls 

@@ -10,10 +10,10 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
 http://cxf.apache.org/jaxws  
 http://cxf.apache.org/schemas/jaxws.xsd">
-	<bean id="hello" class="main.java.controller.HelloWorld" scope="prototype"></bean>
-	<bean id="upload" class="main.java.controller.Upload" scope="prototype"></bean>
-	<context:component-scan base-package="main.java.service" />
-	<context:component-scan base-package="main.java.dao" />
+	<bean id="hello" class="controller.HelloWorld" scope="prototype"></bean>
+	<bean id="upload" class="controller.Upload" scope="prototype"></bean>
+	<context:component-scan base-package="service" />
+	<context:component-scan base-package="dao" />
 	<bean name="jdbsProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -37,10 +37,10 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 				<value>main.java.domain.Order</value>
 			</list>
 		</property> -->
-		<property name ="packagesToScan" value ="main.java.domain">
+		<property name ="packagesToScan" value ="domain">
 		</property>
 		<property name="hibernateProperties">
-			<props>
+			<props>  
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
@@ -64,6 +64,38 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	<!--  <bean id="fixedRateTask" class="com.stevex.demo.FixedRateTask"></bean>-->
+    <bean id="fixedTimeTask" class="timer.FixedTimeTask"></bean>
+    <bean id="job1"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="fixedTimeTask">
+        </property>
+        <property name="targetMethod" value="doSth"></property>
+    </bean>
+  <!--   <bean id="job2"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="fixedTimeTask">
+        </property>
+        <property name="targetMethod" value="doSth"></property>
+    </bean>-->
+     <!--<bean id="simpleTrigger"
+        class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="job1" />
+        <property name="startDelay" value="0" />
+        <property name="repeatInterval" value="60000" />
+    </bean>-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="job1" />
+        <property name="cronExpression" value="2 * * * * ?" />
+    </bean> 
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!-- <ref bean="simpleTrigger" /> -->
+                <ref bean="cronTrigger" />
+            </list>
+        </property>
+    </bean>
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="add*" />
@@ -85,7 +117,7 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 	</tx:advice>
 	<aop:config>
 		<aop:pointcut id="servicePointcut"
-			expression="execution(* main.java.service.impl.*.*(..))" />
+			expression="execution(* service.impl.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
 	</aop:config>
 </beans>

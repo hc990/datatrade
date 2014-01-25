@@ -57,10 +57,10 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 		Commodity commodity = new Commodity();
 		commodity.setDescription("dfsdfsd");
 		commodity.setName("huangchong");
-		commodity.setOriginplace(1);
-		commodity.setPrice(1231);
+//		commodity.setOriginplace(1);
+//		commodity.setPrice(1231);
 		commodity.setStatus(1);
-		commodity.setWeight(231);
+//		commodity.setWeight(231);
 		commodityService.signupCommodity(commodity);
 		System.out.println(u.getUsername());
 		// Order u = orderService.saveOrder(1);

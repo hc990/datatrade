@@ -98,7 +98,7 @@ public class Order {
 		this.status = status;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "userid")
 	public User getUser() {
 		return user;
@@ -108,7 +108,7 @@ public class Order {
 		this.user = user;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
+	@OneToMany(cascade = {CascadeType.ALL} , fetch = FetchType.LAZY, mappedBy = "order")
 	public List<Basket> getBaskets() {
 		return baskets;
 	}

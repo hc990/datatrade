@@ -15,7 +15,7 @@
 	  -->      
   <hr>   
   <ul>
-     <li><a href="<s:url action='chapterTwo/Name'/>">HelloWorld</a></li>	
+     <li><a href="<s:url action='Name'/>">HelloWorld</a></li>	
  	</ul>
   <hr>   	
 	</body>

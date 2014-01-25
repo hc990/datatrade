@@ -1,5 +1,6 @@
 package domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@Entity  
-@Table(name="tb_basket")
+@Entity
+@Table(name = "tb_basket")
 public class Basket {
 	private Long basketid;
 	private Order order;
@@ -30,17 +31,17 @@ public class Basket {
 		this.basketid = basketid;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.REFRESH,CascadeType.DETACH }, optional = false)
 	@JoinColumn(name = "orderid")
 	public Order getOrder() {
 		return order;
 	}
-	
+
 	public void setOrder(Order order) {
 		this.order = order;
 	}
 
-	@OneToOne(fetch=FetchType.LAZY, optional = false)
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	public Commodity getCommodity() {
 		return commodity;
 	}

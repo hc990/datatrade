@@ -16,13 +16,12 @@ public class Commodity implements Serializable {
 	private static final long serialVersionUID = 8714999780734254410L;
 
 	private Long commodityid;
+	private String originplace;
 	private String name;
-	private Integer originplace;
+	private String brand;
+	private Integer status;// 0未验证//1验证通过//2上架销售//3下架
 	private String description;
-	private Integer weight;
-	private Integer status;
-	private Integer price;
-	private String credential;
+	private Long price;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +43,12 @@ public class Commodity implements Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "originplace", nullable = false)
-	public Integer getOriginplace() {
+	@Column(name = "originplace", nullable = true)
+	public String getOriginplace() {
 		return originplace;
 	}
 
-	public void setOriginplace(Integer originplace) {
+	public void setOriginplace(String originplace) {
 		this.originplace = originplace;
 	}
 
@@ -62,15 +61,6 @@ public class Commodity implements Serializable {
 		this.description = description;
 	}
 
-	@Column(name = "weight", nullable = false)
-	public Integer getWeight() {
-		return weight;
-	}
-
-	public void setWeight(Integer weight) {
-		this.weight = weight;
-	}
-
 	@Column(name = "status", nullable = false)
 	public Integer getStatus() {
 		return status;
@@ -81,21 +71,21 @@ public class Commodity implements Serializable {
 	}
 
 	@Column(name = "price", nullable = false)
-	public Integer getPrice() {
+	public Long getPrice() {
 		return price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 
-	@Column(name = "credential", nullable = true)
-	public String getCredential() {
-		return credential;
+	@Column(name = "brand", nullable = true)
+	public String getBrand() {
+		return brand;
 	}
 
-	public void setCredential(String credential) {
-		this.credential = credential;
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 
 }
