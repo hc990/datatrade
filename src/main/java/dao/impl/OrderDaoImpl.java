@@ -27,6 +27,7 @@ public class OrderDaoImpl implements OrderDao {
 //		this.hibernateTemplate = hibernateTemplate;
 //	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Order> getOrders(User user) {
 		// TODO Auto-generated method stub

@@ -1,13 +1,7 @@
 package etl;
 
-import java.util.List;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
 import mongodb.MongoUtil;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -41,9 +35,7 @@ public class ETLMongoToMysql {
 					q=(String)dbo.get("dbrand");
 				}
 				System.out.println(dbo.get("dbrand"));
-			}
-			
-			
+			}	
 			System.out.println(i);
 			System.out.println(j);
 			System.out.println(z);

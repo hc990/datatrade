@@ -7,26 +7,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 import mongodb.MongoUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBCollection;
-import com.mongodb.WriteConcern;
 
 import crawler.dto.Commodity;
 import crawler.dto.DomInfo;
@@ -85,7 +79,7 @@ public class CrawlerGAJImpl implements Crawler {
 		crawleds = new HashSet<String>();
 		// crawlerPage = new CrawlerGAJPage();
 
-		StringTokenizer st = new StringTokenizer("");
+		//StringTokenizer st = new StringTokenizer("");
 
 		// getHrefs(doBreadthSearch(mainUrl));
 		// for(String crawling:crawlings){

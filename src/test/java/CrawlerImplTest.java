@@ -1,26 +1,7 @@
-package crawler;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.List;
 
-import mongodb.MongoUtil;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-
-import crawler.dto.DomInfo;
-import etl.ETLMongoToMysql;
 import junit.framework.TestCase;
+import etl.ETLMongoToMysql;
 
 public class CrawlerImplTest extends TestCase {
 

@@ -39,7 +39,7 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 	 * Later we will add internationalization features that pull the text from a
 	 * local specific properties file.
 	 */
-	private static final String GREETING = "Hello ";
+	private static final String GREETING = "Hello";
 
 	/*
 	 * By default, the Struts 2 framework will invoke the execute() method on

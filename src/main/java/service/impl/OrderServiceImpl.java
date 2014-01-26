@@ -1,5 +1,6 @@
 package service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import service.OrderService;
@@ -9,10 +10,7 @@ import domain.Order;
 @Service
 public class OrderServiceImpl implements OrderService{
 
-	
-	/**
-	 * 
-	 * */
+	@Autowired
 	private OrderDao orderDao;
 
 	@Override
