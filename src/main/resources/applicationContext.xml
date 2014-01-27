@@ -11,8 +11,9 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 http://cxf.apache.org/jaxws  
 http://cxf.apache.org/schemas/jaxws.xsd">
 	<bean id="hello" class="controller.HelloWorld" scope="prototype"></bean>
-	<bean id="upload" class="controller.Upload" scope="prototype"></bean>
+	<bean id="upload" class="controller.UploadController" scope="prototype"></bean>
 	<context:component-scan base-package="service" />
+	<context:component-scan base-package="etl" />
 	<context:component-scan base-package="dao" />
 	<bean name="jdbsProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -32,11 +33,6 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 	<bean name="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<!-- <property name="annotatedClasses">
-			<list>
-				<value>main.java.domain.Order</value>
-			</list>
-		</property> -->
 		<property name ="packagesToScan" value ="domain">
 		</property>
 		<property name="hibernateProperties">
@@ -72,18 +68,6 @@ http://cxf.apache.org/schemas/jaxws.xsd">
         </property>
         <property name="targetMethod" value="doSth"></property>
     </bean>
-  <!--   <bean id="job2"
-        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="fixedTimeTask">
-        </property>
-        <property name="targetMethod" value="doSth"></property>
-    </bean>-->
-     <!--<bean id="simpleTrigger"
-        class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-        <property name="jobDetail" ref="job1" />
-        <property name="startDelay" value="0" />
-        <property name="repeatInterval" value="60000" />
-    </bean>-->
     <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="job1" />
         <property name="cronExpression" value="2 * * * * ?" />
@@ -91,7 +75,6 @@ http://cxf.apache.org/schemas/jaxws.xsd">
     <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="triggers">
             <list>
-                <!-- <ref bean="simpleTrigger" /> -->
                 <ref bean="cronTrigger" />
             </list>
         </property>
@@ -117,7 +100,8 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 	</tx:advice>
 	<aop:config>
 		<aop:pointcut id="servicePointcut"
-			expression="execution(* service.impl.*.*(..))" />
+			expression="execution(* service.impl..*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
 	</aop:config>
+	<aop:aspectj-autoproxy />
 </beans>
