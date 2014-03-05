@@ -79,7 +79,7 @@ public class Commodity implements Serializable {
 		this.price = price;
 	}
 
-	@Column(name = "brand", nullable = true)
+	@Column(name = "brand", nullable = false)
 	public String getBrand() {
 		return brand;
 	}

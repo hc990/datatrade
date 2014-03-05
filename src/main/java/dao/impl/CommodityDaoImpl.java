@@ -30,13 +30,13 @@ public class CommodityDaoImpl implements CommodityDao {
 	@Override
 	public Commodity getCommodity(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return hibernateTemplate.load(Commodity.class, id);
 	}
 
 	@Override
 	public List<Commodity> getCommodities(Commodity commodity) {
 		// TODO Auto-generated method stub
-		return null;
+		return (List<Commodity>)hibernateTemplate.findByExample(commodity); 
 	}
 
 }
