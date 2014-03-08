@@ -1,7 +1,6 @@
 package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 
 import service.CommodityService;
 import service.OrderService;
@@ -11,7 +10,7 @@ import com.opensymphony.xwork2.ModelDriven;
 
 import domain.Commodity;
 import domain.User;
-
+  
 /* 
  * Hello World Action for chapter one.  This Action expects to receive a 
  * name input from a form on Name.jsp.  The business logic of this action
@@ -19,8 +18,6 @@ import domain.User;
  * makes that custom message available for the result to which it forwards.  
  */
 
-
-@Scope("prototype")
 public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 
 	User u = new User();
@@ -39,7 +36,7 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 	 * Later we will add internationalization features that pull the text from a
 	 * local specific properties file.
 	 */
-	private static final String GREETING = "Hello";
+//	private static final String GREETING = "Hello";
 
 	/*
 	 * By default, the Struts 2 framework will invoke the execute() method on
@@ -58,11 +55,12 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 		commodity.setDescription("dfsdfsd");
 		commodity.setName("huangchong");
 //		commodity.setOriginplace(1);
-//		commodity.setPrice(1231);
+		commodity.setPrice(123l);
+		commodity.setBrand("");
+		commodity.setOriginplace("");
 		commodity.setStatus(1);
 //		commodity.setWeight(231);
 		commodityService.signupCommodity(commodity);
-		System.out.println(u.getUsername());
 		// Order u = orderService.saveOrder(1);
 		// setCustomGreeting(GREETING + u.getAddress());
 
@@ -71,7 +69,7 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 		 * will just return the string we have mapped to our successful result.
 		 */
 
-		return "SUCCESS";
+		return SUCCESS;
 	}
 
 	// public void validate() {

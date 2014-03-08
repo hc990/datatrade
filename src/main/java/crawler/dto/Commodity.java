@@ -15,6 +15,24 @@ public class Commodity implements Serializable {
 	private String brand;
 	private String title;
 	private String price;
+	private String parentUrl;
+	private String parentName;
+
+	public String getParentUrl() {
+		return parentUrl;
+	}
+
+	public void setParentUrl(String parentUrl) {
+		this.parentUrl = parentUrl;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
 
 	public String getImgUrl() {
 		return imgUrl;

@@ -12,8 +12,9 @@ import crawler.dto.DomInfo;
 
 public interface CrawlerPage {
 
+	
 	/**
-	 * ÌáÈ¡htmlÖÐÓÐÓÃÊý¾Ý
+	 * ï¿½ï¿½È¡htmlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author noname
 	 * @param String
@@ -22,7 +23,7 @@ public interface CrawlerPage {
 	List<DomInfo> getMainHtmlInfo(Document doc,String className, String delim);
 
 	/**
-	 * ÌáÈ¡htmlÖÐÓÐÓÃÊý¾Ý
+	 * ï¿½ï¿½È¡htmlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author noname
 	 * @param String
@@ -31,7 +32,7 @@ public interface CrawlerPage {
 	List<DomInfo> getHtmlInfo(Element link, String className, String delim);
 
 	/**
-	 * ÌáÈ¡htmlÖÐÓÐÓÃÊý¾Ý
+	 * ï¿½ï¿½È¡htmlï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author noname
 	 * @param String
@@ -40,7 +41,7 @@ public interface CrawlerPage {
 	List<DomInfo> getHtmlInfo(Element link, String delim);
 
 	/**
-	 * ÌáÈ¡¶þ¼¶×ÓÒ³Ãæ·ÖÀàÊý¾Ý
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author noname
 	 * @param String
@@ -49,7 +50,7 @@ public interface CrawlerPage {
 	List<DomInfo> getSubHtmlInfo(Document doc,String id, String delim);
 
 	/**
-	 * ÌáÈ¡Èý¼¶×ÓÒ³Ãæ·ÖÀàÊý¾Ý
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author noname
 	 * @param String
@@ -58,7 +59,7 @@ public interface CrawlerPage {
 	List<Commodity> getSubSubHtmlInfo(Document doc,String id, String delim, String delim2);
 
 	/**
-	 * ÌáÈ¡(¸ü¶à)×ÓÒ³Ãæ·ÖÀàÊý¾Ý
+	 * ï¿½ï¿½È¡(ï¿½ï¿½ï¿½)ï¿½ï¿½Ò³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @author noname
 	 * @param String

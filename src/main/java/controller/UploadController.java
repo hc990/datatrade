@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+
 public class UploadController extends ActionSupport {
 
 	private static final long serialVersionUID = 1058118154055960372L;
@@ -40,7 +41,7 @@ public class UploadController extends ActionSupport {
 		}
 
 		setCustomGreeting(picFileName);
-		return "SUCCESS";
+		return SUCCESS;
 	}
 
 	private File pic;

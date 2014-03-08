@@ -7,8 +7,10 @@ public class TestTimer {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 		ctx.load("classpath:applicationContext.xml");
 		ctx.refresh();
+		ctx.close();
 		while (true) {
 			
 		}
+		
 	}
 }

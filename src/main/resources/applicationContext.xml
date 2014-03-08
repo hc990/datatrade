@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
-http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  
-http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  
-http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
-http://cxf.apache.org/jaxws  
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd  
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+http://www.springframework.org/schema/data/mongo  
+http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd    
+http://cxf.apache.org/jaxws     
 http://cxf.apache.org/schemas/jaxws.xsd">
 	<bean id="hello" class="controller.HelloWorld" scope="prototype"></bean>
 	<bean id="upload" class="controller.UploadController" scope="prototype"></bean>
+	<bean id="commodity" class="controller.CommodityController" scope="prototype"></bean>
 	<context:component-scan base-package="service" />
 	<context:component-scan base-package="etl" />
 	<context:component-scan base-package="dao" />
@@ -28,15 +37,15 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.user}" />
-		<!--<property name="password" value="${jdbc.password}" />  -->
+		<!--<property name="password" value="${jdbc.password}" /> -->
 	</bean>
 	<bean name="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name ="packagesToScan" value ="domain">
+		<property name="packagesToScan" value="domain">
 		</property>
 		<property name="hibernateProperties">
-			<props>  
+			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.bytecode.use_reflection_optimizer">true</prop>
@@ -47,38 +56,38 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 				<prop key="hibernate.c3p0.timeout">100</prop>
 				<prop key="hibernate.c3p0.max_statement">20</prop>
 				<prop key="hibernate.c3p0.idle_test_period">100</prop>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
 	</bean>
 	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-        <property name="sessionFactory">
-            <ref bean="sessionFactory"/>
-        </property>
-    </bean>
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
 	<bean name="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<!--  <bean id="fixedRateTask" class="com.stevex.demo.FixedRateTask"></bean>-->
-    <bean id="fixedTimeTask" class="timer.FixedTimeTask"></bean>
-    <bean id="job1"
-        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject" ref="fixedTimeTask">
-        </property>
-        <property name="targetMethod" value="doSth"></property>
-    </bean>
-    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="job1" />
-        <property name="cronExpression" value="2 * * * * ?" />
-    </bean> 
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="cronTrigger" />
-            </list>
-        </property>
-    </bean>
+	<!--<bean id="fixedRateTask" class="com.stevex.demo.FixedRateTask"></bean> -->
+	<bean id="fixedTimeTask" class="timer.FixedTimeTask"></bean>
+	<bean id="job1"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="fixedTimeTask"></property>
+		<property name="targetMethod" value="doSth"></property>
+	</bean>
+	<bean id="cronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="job1" />
+		<property name="cronExpression" value="2 * * * * ?" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger" />
+			</list>
+		</property>
+	</bean>
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="add*" />
@@ -99,9 +108,25 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>
-		<aop:pointcut id="servicePointcut"
-			expression="execution(* service.impl..*.*(..))" />
+		<aop:pointcut id="servicePointcut" expression="execution(* service.impl..*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
 	</aop:config>
+	<mongo:mongo host="localhost" port="27017">
+		<mongo:options connections-per-host="8"
+			threads-allowed-to-block-for-connection-multiplier="4"
+			connect-timeout="1000"   
+			max-wait-time="1500" 
+			auto-connect-retry="true" 
+			socket-keep-alive="true" 
+			socket-timeout="1500" 
+			slave-ok="true" 
+			write-number="1" 
+			write-timeout="0"
+			write-fsync="true" />
+	</mongo:mongo>
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="mongo" />
+		<constructor-arg name="databaseName" value="zongdb" />
+	</bean>
 	<aop:aspectj-autoproxy />
 </beans>

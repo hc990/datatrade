@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,24 +16,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import mongodb.MongoUtil;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBAddress;
 import com.mongodb.DBCollection;
+import com.mongodb.Mongo;
 
 import crawler.dto.Commodity;
 import crawler.dto.DomInfo;
 
 /**
- * 此类负责爬虫软件的主控模块 1.Url效验 2.
+ *
  * 
  * */
 public class CrawlerGAJImpl implements Crawler {
 
 	private int deapth;
+
+	public CrawlerGAJImpl(CrawlerPage crawlerPage) {
+		this.crawlerPage = crawlerPage;
+	}
 
 	private CrawlerPage crawlerPage;
 
@@ -43,9 +50,9 @@ public class CrawlerGAJImpl implements Crawler {
 		return crawlerPage;
 	}
 
-	public void setCrawlerPage(CrawlerPage crawlerPage) {
-		this.crawlerPage = crawlerPage;
-	}
+	// public void setCrawlerPage(CrawlerPage crawlerPage) {
+	// this.crawlerPage = crawlerPage;
+	// }
 
 	public void setCrawlings(Set<String> crawlings) {
 		this.crawlings = crawlings;
@@ -79,7 +86,7 @@ public class CrawlerGAJImpl implements Crawler {
 		crawleds = new HashSet<String>();
 		// crawlerPage = new CrawlerGAJPage();
 
-		//StringTokenizer st = new StringTokenizer("");
+		// StringTokenizer st = new StringTokenizer("");
 
 		// getHrefs(doBreadthSearch(mainUrl));
 		// for(String crawling:crawlings){
@@ -109,12 +116,12 @@ public class CrawlerGAJImpl implements Crawler {
 		HttpURLConnection conn = null;
 		StringBuffer sb = new StringBuffer();
 		try {
-//			Proxy proxy = new Proxy(java.net.Proxy.Type.HTTP,
-//					new InetSocketAddress("172.31.1.246", 8080));
-//			conn = (HttpURLConnection) pageUrl.openConnection(proxy);
-			conn = (HttpURLConnection) pageUrl.openConnection();
+			Proxy proxy = new Proxy(java.net.Proxy.Type.HTTP,
+					new InetSocketAddress("172.31.1.246", 8080));
+			conn = (HttpURLConnection) pageUrl.openConnection(proxy);
+//			conn = (HttpURLConnection) pageUrl.openConnection();
 			conn.connect();
-			// 打印请求相应的头部文件
+			// 锟斤拷印锟斤拷锟斤拷锟斤拷应锟斤拷头锟斤拷锟侥硷拷
 			Map<String, List<String>> headers = conn.getHeaderFields();
 			List<String> header = headers.get(null);
 			if (header.get(0) != null
@@ -143,7 +150,9 @@ public class CrawlerGAJImpl implements Crawler {
 		final File file = new File("d:/urls.txt");
 		final List<String> rtns = new ArrayList<String>();
 		try {
-			final DBCollection category = MongoUtil.getDBCollection("category");
+			DBAddress addr = new DBAddress("localhost", 27017, "zongdb");
+			DB m = Mongo.connect(addr);
+			final DBCollection category = m.getCollection("category");
 			final FileWriter fw = new FileWriter(file);
 			Document doc = Jsoup.parse(mainHtml);
 			List<DomInfo> domInfos = crawlerPage.getMainHtmlInfo(doc,
@@ -167,6 +176,7 @@ public class CrawlerGAJImpl implements Crawler {
 						for (DomInfo domInfo2 : domInfos2) {
 							List<DomInfo> domInfos3 = crawlerPage.getHtmlInfo(
 									domInfo2.getCategory(), "category_list");
+
 							BasicDBObject basicDBObject2 = new BasicDBObject();
 							basicDBObject2.put("subCategoryNo",
 									domInfo2.getGajCategory());
@@ -222,43 +232,134 @@ public class CrawlerGAJImpl implements Crawler {
 	}
 
 	@Override
-	public void getPageInfo(List<String> urls) {
+	public BasicDBObject getPageInfo(String url) {
+		// TODO Auto-generated method stub  
+		BasicDBObject basicDBObject = null;
+		try {
+//			DBAddress addr = new DBAddress("localhost", 27017, "zongdb");
+//			DB m = Mongo.connect(addr);
+//			DBCollection biz = m.getCollection("biz");
+//			for (String url : urls) {  
+//				new Thread(new Runnable() {
+//					@Override
+//					public void run() {
+//						String pageInfo = downloadPage(verifyUrl(url));
+//						if (pageInfo != null && !"".equals(pageInfo)) {
+//							Document doc = Jsoup.parse(pageInfo);
+//							List<DomInfo> domInfos = crawlerPage
+//									.getSubHtmlInfo(doc,
+//											"summary_category_list",
+//											"div.split_list a:not(.more_open_btn more_open_slide)");
+//							crawlerPage.getSubMoreHtmlInfo(doc, domInfos,
+//									"summary_category_list",
+//									"div.split_more_list a");
+//							for (DomInfo domInfo : domInfos) {
+//								String subPageInfo = downloadPage(verifyUrl(url));
+//								Document subdoc = Jsoup.parse(subPageInfo);
+//								List<Commodity> commoditys = crawlerPage
+//										.getSubSubHtmlInfo(subdoc,
+//												"div.product_grid_box",
+//												"div.product_grid_image",
+//												"div.product_grid_number");
+//								for (Commodity commodity : commoditys) {
+									String detailInfo = downloadPage(verifyUrl(url));
+									Document detailDoc = Jsoup
+											.parse(detailInfo);
+									basicDBObject = crawlerPage
+											.getDetailHtmlInfo(detailDoc,
+													"product-intro");
+									basicDBObject.put("parentUrl", url);
+									System.out.println(url);
+//									biz.insert(basicDBObject);
+									return basicDBObject;
+//								}
+//							}
+//						}
+//					}
+//				}).start();
+//			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return basicDBObject;
+	}
+
+	@Override
+	public void getAbstractPageInfo(List<String> urls) {
 		// TODO Auto-generated method stub
 		try {
-			final DBCollection biz = MongoUtil.getDBCollection("biz");
+			DBAddress addr = new DBAddress("localhost", 27017, "zongdb");
+			DB m = Mongo.connect(addr);
+			final DBCollection commodityMongo = m.getCollection("commodity");
 			for (final String url : urls) {
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						String pageInfo = downloadPage(verifyUrl(url));
-						if(pageInfo!=null&&!"".equals(pageInfo)){
-							Document doc = Jsoup.parse(pageInfo);
-							List<DomInfo> domInfos = crawlerPage
-									.getSubHtmlInfo(doc, "summary_category_list",
-											"div.split_list a:not(.more_open_btn more_open_slide)");
-							crawlerPage.getSubMoreHtmlInfo(doc, domInfos,
-									"summary_category_list",
-									"div.split_more_list a");
-							for (DomInfo domInfo : domInfos) {
-								String subPageInfo = downloadPage(verifyUrl(domInfo
-										.getUrlAddress()));
-								Document subdoc = Jsoup.parse(subPageInfo);
-								List<Commodity> commoditys = crawlerPage
-										.getSubSubHtmlInfo(subdoc,
-												"div.product_grid_box",
-												"div.product_grid_image", 
-												"div.product_grid_number");
-								for (Commodity commodity : commoditys) {
-									String detailInfo = downloadPage(verifyUrl(commodity.getCategoryUrl()));
-									Document detailDoc = Jsoup.parse(detailInfo);
-									BasicDBObject basicDBObject = crawlerPage.getDetailHtmlInfo(detailDoc, "product-intro");
-									biz.insert(basicDBObject);
-								}
-							}
-						}						
-					}
-				}).start();
+						String subPageInfo = downloadPage(verifyUrl(url));
+						Document subdoc = Jsoup.parse(subPageInfo);
+						List<Commodity> commoditys = crawlerPage
+								.getSubSubHtmlInfo(subdoc,
+										"div.product_grid_box",
+										"div.product_grid_image",
+										"div.product_grid_number");
+						for (Commodity commodity : commoditys) {
+							BasicDBObject basicDBObject = new BasicDBObject();
+							basicDBObject.put("parentUrl", url);
+							basicDBObject.put("brand", commodity.getBrand());
+							basicDBObject.put("url", commodity.getCategoryUrl());
+							basicDBObject.put("img", commodity.getImgUrl());
+							basicDBObject.put("num", commodity.getNumber());
+							basicDBObject.put("price", commodity.getPrice());
+							basicDBObject.put("title", commodity.getTitle());
+							commodityMongo.insert(basicDBObject);
+						}
 			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void getSubCategoryInfo(List<String> urls) {
+		// TODO Auto-generated method stub
+		try {
+			DBAddress addr = new DBAddress("localhost", 27017, "zongdb");
+			DB m = Mongo.connect(addr);
+			final DBCollection subCategory = m.getCollection("subCategory");
+
+			for (final String url : urls) {
+				// new Thread(new Runnable() {
+				// ThreadLocal<BasicDBObject> tl = new
+				// ThreadLocal<BasicDBObject>();
+				// @Override
+				// public void run() {
+				// BasicDBObject basicDBObject = tl.get();
+				// if(basicDBObject == null){
+				// basicDBObject = new BasicDBObject();
+				// }
+				BasicDBObject basicDBObject = new BasicDBObject();
+				basicDBObject.put("parentUrl", url);
+				String pageInfo = downloadPage(verifyUrl(url));
+				if (pageInfo != null && !"".equals(pageInfo)) {
+					Document doc = Jsoup.parse(pageInfo);
+					List<DomInfo> domInfos = crawlerPage
+							.getSubHtmlInfo(doc, "summary_category_list",
+									"div.split_list a:not(.more_open_btn more_open_slide)");
+					crawlerPage.getSubMoreHtmlInfo(doc, domInfos,
+							"summary_category_list", "div.split_more_list a");
+					List<BasicDBObject> sublist = new ArrayList<BasicDBObject>();
+					for (DomInfo domInfo : domInfos) {
+						BasicDBObject basicDBObject2 = new BasicDBObject();
+						basicDBObject2
+								.put("subName", domInfo.getCategoryName());
+						basicDBObject2.put("url", domInfo.getUrlAddress());
+						sublist.add(basicDBObject2);
+					}
+					basicDBObject.put("subctg", sublist);
+				}
+				subCategory.insert(basicDBObject);
+			}
+			// }).start();
+			// }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

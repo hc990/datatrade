@@ -3,11 +3,13 @@ package crawler;
 import java.net.URL;
 import java.util.List;
 
+import com.mongodb.BasicDBObject;
+
 public interface Crawler extends Runnable {
 	
 	
 	/**
-	 * ÏÂÔØÄ³Ò»¸öpage
+	 * ï¿½ï¿½ï¿½ï¿½Ä³Ò»ï¿½ï¿½page
 	 * @author noname
 	 * @param Url
 	 * @return String
@@ -16,7 +18,7 @@ public interface Crawler extends Runnable {
 	
 	
 	/**
-	 * Ö´ĞĞ¹ã¶ÈÓÅÏÈÌ½Ë÷£¬½«ÓĞÓÃµÄurl¼ÇÂ¼µ½×¼±¸ÅÀµÄSet¼¯ºÏÖĞ
+	 * Ö´ï¿½Ğ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½urlï¿½ï¿½Â¼ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Setï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @author noname
 	 * @param String
 	 * @return   
@@ -25,18 +27,32 @@ public interface Crawler extends Runnable {
 	
 	
 	/**
-	 * Ö´ĞĞ¹ã¶ÈÓÅÏÈÌ½Ë÷£¬½«ÓĞÓÃµÄurl¼ÇÂ¼µ½×¼±¸ÅÀµÄSet¼¯ºÏÖĞ
+	 * Ö´ï¿½Ğ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½urlï¿½ï¿½Â¼ï¿½ï¿½×¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Setï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * @author noname
 	 * @param String
 	 * @return   
 	 * */
-	void getPageInfo(List<String> urls);
+	BasicDBObject getPageInfo(String url);
 	
 	
 	/**
-	 * ¼ì²âURL¸ñÊ½(Ö»´¦ÀíHTTP)
+	 * ï¿½ï¿½ï¿½URLï¿½ï¿½Ê½(Ö»ï¿½ï¿½ï¿½ï¿½HTTP)
 	 * @param String
 	 * @return URL
 	 * */
 	URL verifyUrl(String url);
+	
+	/**
+	 * æœ€ç»ˆåˆ†ç±»
+	 * @param String
+	 * @return void
+	 * */
+	void getSubCategoryInfo(List<String> urls);
+	
+	/**
+	 * ç¼©ç•¥å•†å“æ•°æ®
+	 * @param String
+	 * @return void
+	 * */
+	void getAbstractPageInfo(List<String> urls);
 }

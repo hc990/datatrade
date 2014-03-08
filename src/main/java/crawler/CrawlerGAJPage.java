@@ -19,7 +19,7 @@ import crawler.dto.DomInfo;
 
 public class CrawlerGAJPage implements CrawlerPage {
 
-	private String mainUrl = "http://item.grainger.cn";
+	private final static  String mainUrl = "http://item.grainger.cn";
 
 	// @Override
 	// public void getUrlInfo(URL url) {
@@ -29,13 +29,13 @@ public class CrawlerGAJPage implements CrawlerPage {
 	// robotsFileUrl.openStream()));
 	// String line;
 	// while ((line = reader.readLine()) != null) {
-	// if (line.indexOf("Disallow:") == 0) {// ÊÇ·ñ°üº¬"Disallow:"
-	// String disallowPath = line.substring("Disallow:".length());// »ñÈ¡²»ÔÊÐí·ÃÎÊÂ·¾¶
+	// if (line.indexOf("Disallow:") == 0) {// ï¿½Ç·ï¿½ï¿½"Disallow:"
+	// String disallowPath = line.substring("Disallow:".length());// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½
 	//
-	// // ¼ì²éÊÇ·ñÓÐ×¢ÊÍ¡£
+	// // ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½×¢ï¿½Í¡ï¿½
 	// int commentIndex = disallowPath.indexOf("#");
 	// if (commentIndex != -1) {
-	// disallowPath = disallowPath.substring(0, commentIndex);// È¥µô×¢ÊÍ
+	// disallowPath = disallowPath.substring(0, commentIndex);// È¥ï¿½ï¿½×¢ï¿½ï¿½
 	// }
 	//
 	// disallowPath = disallowPath.trim();
@@ -54,9 +54,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 			StringBuffer itemUrl = new StringBuffer(mainUrl);
 			Element link = category.select(delim).first();
 			String href = link.attr("href");
-			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
-			String name = link.attr("name"); // ×Ó³¬Á´±àºÅ
-			String text = link.text(); // ×Ó³¬Á´Ãû³Æ
+			String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
+			String name = link.attr("name"); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			String text = link.text(); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			di.setCategory(category);
 			di.setCategoryName(text);
 			di.setGajCategory(name);
@@ -74,9 +74,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 			DomInfo di = new DomInfo();
 			StringBuffer itemUrl = new StringBuffer(mainUrl);
 			String href = link.attr("href");
-			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
-			String name = link.attr("name"); // //×Ó³¬Á´±àºÅ
-			String text = link.text(); // ×Ó³¬Á´Ãû³Æ
+			String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
+			String name = link.attr("name"); // //ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			String text = link.text(); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			di.setCategory(link);
 			di.setCategoryName(text);
 			di.setGajCategory(name);
@@ -94,9 +94,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 	// StringBuffer url = new StringBuffer(mainUrl);
 	// Element link = category.select("h4 > a").first();
 	// String href = link.attr("href");
-	// String categoryUrl = url.append(href).toString();// Ò»¼¶×Ó³¬Á´
-	// String name = link.attr("name"); // //Ò»¼¶×Ó³¬Á´±àºÅ
-	// String text = link.text(); // Ò»¼¶×Ó³¬Á´Ãû³Æ
+	// String categoryUrl = url.append(href).toString();// Ò»ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½
+	// String name = link.attr("name"); // //Ò»ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// String text = link.text(); // Ò»ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	// /****/
 	// System.out.println(categoryUrl);
 	// System.out.println(name);
@@ -107,9 +107,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 	// url = new StringBuffer(mainUrl);
 	// Element link3 = link2.select("h5 > a").first();
 	// String href2 = link3.attr("href");
-	// String categoryUrl2 = url.append(href2).toString();// ¶þ¼¶×Ó³¬Á´
-	// String name2 = link3.attr("name"); // //¶þ¼¶×Ó³¬Á´±àºÅ
-	// String text2 = link3.text(); // ¶þ¼¶×Ó³¬Á´Ãû³Æ
+	// String categoryUrl2 = url.append(href2).toString();// ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½
+	// String name2 = link3.attr("name"); // //ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// String text2 = link3.text(); // ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	// /****/
 	// System.out.println(categoryUrl2);
 	// System.out.println(name2);
@@ -119,9 +119,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 	// for (Element link4 : link4s) {
 	// String href3 = link4.attr("href");
 	// url = new StringBuffer(mainUrl);
-	// String categoryUrl3 = url.append(href3).toString();// Èý¼¶×Ó³¬Á´
-	// String name3 = link4.attr("name"); // //Èý¼¶×Ó³¬Á´±àºÅ
-	// String text3 = link4.text(); // Èý¼¶×Ó³¬Á´Ãû³Æ
+	// String categoryUrl3 = url.append(href3).toString();// ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½
+	// String name3 = link4.attr("name"); // //ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// String text3 = link4.text(); // ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	// /****/
 	// System.out.println(categoryUrl3);
 	// System.out.println(name3);
@@ -143,9 +143,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 			StringBuffer itemUrl = new StringBuffer(mainUrl);
 			Element link = category.select(delim).first();
 			String href = link.attr("href");
-			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
-			String name = link.attr("name"); // ×Ó³¬Á´±àºÅ
-			String text = link.text(); // ×Ó³¬Á´Ãû³Æ
+			String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
+			String name = link.attr("name"); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			String text = link.text(); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			di.setCategory(category);
 			di.setCategoryName(text);
 			di.setGajCategory(name);
@@ -172,7 +172,7 @@ public class CrawlerGAJPage implements CrawlerPage {
 			String imgUrl = productImage.select("img").first().attr("abs:src");
 			String title = productImage.select("img").first().attr("title");
 			StringBuffer itemUrl = new StringBuffer(mainUrl);
-			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
+			String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
 			String price = productPrice.text();
 			String brand = productBrand.text();
 			String number = productNum.text();
@@ -197,8 +197,8 @@ public class CrawlerGAJPage implements CrawlerPage {
 			DomInfo di = new DomInfo();
 			StringBuffer itemUrl = new StringBuffer(mainUrl);
 			String href = category.attr("href");
-			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
-			String text = category.text(); // ×Ó³¬Á´Ãû³Æ
+			String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
+			String text = category.text(); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			di.setCategory(category);
 			di.setCategoryName(text);
 			di.setCategoryNum(-1);
@@ -216,9 +216,9 @@ public class CrawlerGAJPage implements CrawlerPage {
 			DomInfo di = new DomInfo();
 			StringBuffer itemUrl = new StringBuffer(mainUrl);
 			String href = category.attr("href");
-			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
-			String text = category.text(); // ×Ó³¬Á´Ãû³Æ
-			// if (text != null && !"¸ü¶à>>".equals(text)) {
+			String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
+			String text = category.text(); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			// if (text != null && !"ï¿½ï¿½ï¿½>>".equals(text)) {
 			di.setCategory(category);
 			di.setCategoryName(text);
 			di.setCategoryNum(-1);
@@ -233,80 +233,85 @@ public class CrawlerGAJPage implements CrawlerPage {
 	public BasicDBObject getDetailHtmlInfo(Document doc, String id) {
 		//List<DomInfo> returnList = new ArrayList<DomInfo>();
 		Element element = doc.getElementById(id);// product-intro
-		String name = element.getElementById("name").text();//commodity name
-		String price = element.select("li#summary-price div.dd").text(); 
-		String brand = element.select("li#summary-brand div.dd").text();
-		String salesnumber = element.select("li#summary-salesnumber div.dd").text();
-		
-		System.out.print(name);
-		System.out.print(price);
-		System.out.print(brand);
-		System.out.print(salesnumber);
-		
 		BasicDBObject basicDBObject = new BasicDBObject();
-		basicDBObject.put("dname",name);
-		basicDBObject.put("dprice",price);
-		basicDBObject.put("dbrand",brand);
-		basicDBObject.put("dsalesnumber",salesnumber);
-		
-		BasicDBList subtitlelist = new BasicDBList();
-		BasicDBList subDetaillist = new BasicDBList();
-		Element pds = doc.getElementById("pd_table");
-		Elements titles = pds.select("thead tr:not(.select_thead) th");
-		//Elements pdlist = pds.select("tbody tr td");
-//		for(int i=0;i<titles.size();i++){
-//			BasicDBObject bo = new BasicDBObject();
-//			basicDBObject.put(titles.get(i).text().toString(),pdlist.get(i).text().toString());			
-//			System.out.print(titles.get(i).text().toString()+":"+pdlist.get(i).text().toString());
-//			sublist.add(bo);
-//		}
-//		basicDBObject.put("detail", sublist);
-		for (Element title : titles) {
-			BasicDBObject bo = new BasicDBObject();
-			bo.put("title",title.text().toString());
-			subtitlelist.add(bo);
-		}	
-		Elements pdlist = pds.select("tbody tr td");
-		for (Element pd : pdlist) {
-			BasicDBObject bo = new BasicDBObject();
-			bo.put("detail",pd.text().toString());	
-			subDetaillist.add(bo);
-		}
-		basicDBObject.put("title", subtitlelist);
-		basicDBObject.put("detail", subDetaillist);
-		System.out.println("\n");	
-		Element content = doc.getElementById("content_product");// product-intro
-		Elements property = content.getElementsByClass("property").select("div:not(#productImageDesc)");
-		//System.out.print(property.html());//.attr("abs:src");
-		System.out.println("\n");	
-		basicDBObject.put("dcontent",property.first().html());
-		BasicDBList imgList = new BasicDBList();
-		Elements imgs = content.select("div.p-img");
-		for (Element img : imgs) {
-			BasicDBObject bo = new BasicDBObject();
-			bo.put("img",img.select("img").attr("abs:src"));
-			imgList.add(bo);
-			System.out.println(img.select("img").attr("abs:src"));	
-			//System.out.println("\n");	
-		}
-		basicDBObject.put("imgs", imgList);
-		System.out.println("\n");	
-		return basicDBObject;
-//		Elements categorys = element.select(delim);
-//		for (Element category : categorys) {
-//			DomInfo di = new DomInfo();
-//			StringBuffer itemUrl = new StringBuffer(mainUrl);
-//			String href = category.attr("href");
-//			String categoryUrl = itemUrl.append(href).toString();// ×Ó³¬Á´
-//			String text = category.text(); // ×Ó³¬Á´Ãû³Æ
-//			if (text != null && !"¸ü¶à>>".equals(text)) {
-//				di.setCategory(category);
-//				di.setCategoryName(text);
-//				di.setCategoryNum(-1);
-//				di.setUrlAddress(categoryUrl);
-//				returnList.add(di);
+		if(element!=null){
+			String name = element.getElementById("name").text();//commodity name
+			String price = element.select("li#summary-price div.dd").text(); 
+			String brand = element.select("li#summary-brand div.dd").text();
+			String salesnumber = element.select("li#summary-salesnumber div.dd").text();
+			
+			System.out.print(name);
+			System.out.print(price);
+			System.out.print(brand);
+			System.out.print(salesnumber);
+			
+			
+			basicDBObject.put("dname",name);
+			basicDBObject.put("dprice",price);
+			basicDBObject.put("dbrand",brand);
+			basicDBObject.put("dsalesnumber",salesnumber);
+			
+			BasicDBList subtitlelist = new BasicDBList();
+			BasicDBList subDetaillist = new BasicDBList();
+			Element pds = doc.getElementById("pd_table");
+			Elements titles = pds.select("thead tr:not(.select_thead) th");
+			//Elements pdlist = pds.select("tbody tr td");
+//			for(int i=0;i<titles.size();i++){
+//				BasicDBObject bo = new BasicDBObject();
+//				basicDBObject.put(titles.get(i).text().toString(),pdlist.get(i).text().toString());			
+//				System.out.print(titles.get(i).text().toString()+":"+pdlist.get(i).text().toString());
+//				sublist.add(bo);
 //			}
-//		}
-//		return returnList;
+//			basicDBObject.put("detail", sublist);
+			for (Element title : titles) {
+				BasicDBObject bo = new BasicDBObject();
+				bo.put("title",title.text().toString());
+				subtitlelist.add(bo);
+			}	
+			Elements pdlist = pds.select("tbody tr td");
+			for (Element pd : pdlist) {
+				BasicDBObject bo = new BasicDBObject();
+				bo.put("detail",pd.text().toString());	
+				subDetaillist.add(bo);
+			}
+			basicDBObject.put("title", subtitlelist);
+			basicDBObject.put("detail", subDetaillist);
+			System.out.println("\n");	
+			Element content = doc.getElementById("content_product");// product-intro
+			Elements property = content.getElementsByClass("property").select("div:not(#productImageDesc)");
+			//System.out.print(property.html());//.attr("abs:src");
+			System.out.println("\n");	
+			basicDBObject.put("dcontent",property.first().html());
+			BasicDBList imgList = new BasicDBList();
+			Elements imgs = content.select("div.p-img");
+			for (Element img : imgs) {
+				BasicDBObject bo = new BasicDBObject();
+				bo.put("img",img.select("img").attr("abs:src"));
+				imgList.add(bo);
+				System.out.println(img.select("img").attr("abs:src"));	
+				//System.out.println("\n");	
+			}
+			basicDBObject.put("imgs", imgList);
+			System.out.println("\n");	
+			
+//			Elements categorys = element.select(delim);
+//			for (Element category : categorys) {
+//				DomInfo di = new DomInfo();
+//				StringBuffer itemUrl = new StringBuffer(mainUrl);
+//				String href = category.attr("href");
+//				String categoryUrl = itemUrl.append(href).toString();// ï¿½Ó³ï¿½ï¿½ï¿½
+//				String text = category.text(); // ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+//				if (text != null && !"ï¿½ï¿½ï¿½>>".equals(text)) {
+//					di.setCategory(category);
+//					di.setCategoryName(text);
+//					di.setCategoryNum(-1);
+//					di.setUrlAddress(categoryUrl);
+//					returnList.add(di);
+//				}
+//			}
+//			return returnList;
+			
+		}
+		return basicDBObject;
 	}
 }
