@@ -1,12 +1,16 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,9 +23,10 @@ public class Commodity implements Serializable {
 	private String originplace;
 	private String name;
 	private String brand;
-	private Integer status;// 0未验证//1验证通过//2上架销售//3下架
+	private Integer status;
 	private String description;
-	private Long price;
+	private Float price;
+	private List<CommodityDetail> commodityDetails;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +39,7 @@ public class Commodity implements Serializable {
 		this.commodityid = commodityid;
 	}
 
-	@Column(name = "name", length = 20, nullable = false)
+	@Column(name = "name", length = 100, nullable = false)
 	public String getName() {
 		return name;
 	}
@@ -71,11 +76,11 @@ public class Commodity implements Serializable {
 	}
 
 	@Column(name = "price", nullable = false)
-	public Long getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Long price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 
@@ -83,9 +88,20 @@ public class Commodity implements Serializable {
 	public String getBrand() {
 		return brand;
 	}
-
+	
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
 
+	
+	@OneToMany(mappedBy="commodity",cascade={CascadeType.ALL},fetch= FetchType.LAZY)
+	public List<CommodityDetail> getCommodityDetails() {
+		return commodityDetails;
+	}
+
+	public void setCommodityDetails(List<CommodityDetail> commodityDetails) {
+		this.commodityDetails = commodityDetails;
+	}
+
+	 
 }

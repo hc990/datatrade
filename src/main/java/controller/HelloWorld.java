@@ -55,7 +55,7 @@ public class HelloWorld extends ActionSupport implements ModelDriven<User> {
 		commodity.setDescription("dfsdfsd");
 		commodity.setName("huangchong");
 //		commodity.setOriginplace(1);
-		commodity.setPrice(123l);
+		commodity.setPrice(123f);
 		commodity.setBrand("");
 		commodity.setOriginplace("");
 		commodity.setStatus(1);

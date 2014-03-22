@@ -25,6 +25,7 @@ public class CommodityDetail implements Serializable {
 	private Commodity commodity;
 	private String detailKey;
 	private String detailValue;
+	private Integer detailnum;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +45,7 @@ public class CommodityDetail implements Serializable {
 		this.commodity = commodity;
 	}
 
+	@Column(name = "detailKey", length = 50, nullable = false)
 	public String getDetailKey() {
 		return detailKey;
 	}
@@ -51,7 +53,8 @@ public class CommodityDetail implements Serializable {
 	public void setDetailKey(String detailKey) {
 		this.detailKey = detailKey;
 	}
-
+	
+	@Column(name = "detailValue", length = 500, nullable = false)
 	public String getDetailValue() {
 		return detailValue;
 	}
@@ -63,5 +66,15 @@ public class CommodityDetail implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+	public Integer getDetailnum() {
+		return detailnum;
+	}
+
+	public void setDetailnum(Integer detailnum) {
+		this.detailnum = detailnum;
+	}
+	
+	
 
 }

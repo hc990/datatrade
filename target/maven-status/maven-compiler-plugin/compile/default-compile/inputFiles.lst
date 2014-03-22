@@ -3,6 +3,7 @@
 /Users/huangchong/Workspaces/datatrade/src/main/java/controller/CommodityController.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/domain/CommodityDetail.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/dao/CategoryDao.java
+/Users/huangchong/Workspaces/datatrade/src/main/java/dto/CommodityDto.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/crawler/Crawler.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/service/CommodityService.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/service/UserService.java

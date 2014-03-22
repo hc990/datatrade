@@ -1,9 +1,12 @@
 package etl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +23,8 @@ import crawler.Crawler;
 import crawler.CrawlerGAJImpl;
 import crawler.CrawlerGAJPage;
 import crawler.CrawlerPage;
+import domain.Commodity;
+import domain.CommodityDetail;
 
 public class ETLMongoToMysqlTest extends TestCase {
 
@@ -219,9 +224,10 @@ public class ETLMongoToMysqlTest extends TestCase {
 					.getBean("mongoTemplate");
 			HibernateTemplate hibernateTemplate = (HibernateTemplate) ctx
 					.getBean("hibernateTemplate");
+
 			DBCollection bies = mongoTemplate.getCollection("biz");
 			DBCollection commodities = mongoTemplate.getCollection("commodity");
-			Long count = Long.valueOf(commodities.count());
+			Long count = Long.valueOf(commodities.count()); 
 			BigDecimal bd = new BigDecimal(count);
 			int j = 0;
 			for (long i = 0; i <= bd.divide(new BigDecimal(30l),
@@ -229,32 +235,75 @@ public class ETLMongoToMysqlTest extends TestCase {
 				DBCursor dBCursor = null;
 				dBCursor = commodities.find().skip(j).limit(30);
 				while (dBCursor.hasNext()) {
+					Commodity commodity = new Commodity();
 					DBObject dboc = (DBObject) dBCursor.next();
-					int f = 0;
-					int t = 0;
-					int z = 0;
+					// int t = 0;
+					// int z = 0;
 					if (dboc != null) {
 						String url = (String) dboc.get("url");
+						System.out.println(url);
 						DBObject dbo = bies.findOne(new BasicDBObject(
 								"parentUrl", url));
-						System.out.println(dbo.get("dname"));
-						System.out.println(dbo.get("dprice"));
-						String price = (String) dbo.get("dprice");
-						if (price.indexOf("~") > 0) {
-							t++;
+						String name = (String) dbo.get("dname");
+						if (!StringUtils.isEmpty(name)) {
+							commodity.setOriginplace(url);
+							commodity.setName(StringUtils.isEmpty(name) ? ""
+									: name.trim());
+							System.out.println(dbo.get("dprice"));
+							String price = (String) dbo.get("dprice");
+							price = StringUtils.isEmpty(price) ? "0.0" : price
+									.trim();
+							if (price.indexOf("~") > 0) {
+								price = price.substring(price.indexOf("￥") + 1,
+										price.indexOf("~")).replaceAll(",", "");
+								commodity.setPrice(Float.parseFloat(price));
+							} else {
+								if (price.indexOf("-") >= 0) {
+									commodity.setPrice(Float
+											.parseFloat(("0.0")));
+								} else {
+									price = price.substring(
+											price.indexOf("￥") + 1,
+											price.length()).replaceAll(",", "");
+									commodity.setPrice(Float
+											.parseFloat((price)));
+								}
+							}
+							commodity.setBrand((String) dbo.get("dbrand"));
+							System.out.println(dbo.get("dsalesnumber"));
+							String number = (String) dbo.get("dsalesnumber");
+							commodity.setDescription((String) dboc.get("img"));
+							commodity.setStatus(0);
+							List<DBObject> titles = (List<DBObject>) dbo
+									.get("title");
+							List<DBObject> details = (List<DBObject>) dbo
+									.get("detail");
+							int numObj = details.size() / titles.size();
+							if (numObj > 1) {
+								System.out.println("dfasdfdsf");
+							}
+							List<CommodityDetail> commodityDetails = new ArrayList<CommodityDetail>();
+							for (int v = 0; v < numObj; v++) {
+								for (int b = 0; b < titles.size(); b++) {
+									DBObject title = (DBObject) titles.get(b);
+									CommodityDetail commodityDetail = new CommodityDetail();
+									commodityDetail.setDetailKey(title.get("title")
+											.toString());
+									DBObject detail = (DBObject) details.get(b
+											+ v * titles.size());
+									commodityDetail.setDetailValue(detail.get("detail")
+											.toString());
+									commodityDetail.setCommodity(commodity);
+									commodityDetail.setDetailnum(v+1);
+									commodityDetails.add(commodityDetail);
+								}
+							}
+							commodity.setCommodityDetails(commodityDetails);
+							hibernateTemplate.save(commodity);
 						}
-						System.out.println(dbo.get("dsalesnumber"));
-						String number = (String) dbo.get("dsalesnumber");
-						int num = Integer.valueOf(number.substring(0,
-								number.indexOf("件")));
-						if (num > z) {
-							z = num;
-//							p = (String) dbo.get("dname");
-//							q = (String) dbo.get("dbrand");
-						}
-						System.out.println((String) dbo.get("dname"));
-						System.out.println(dbo.get("dbrand"));
+
 					}
+
 				}
 				j = j + 30;
 			}

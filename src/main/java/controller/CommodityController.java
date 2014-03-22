@@ -53,25 +53,26 @@ public class CommodityController extends ActionSupport  {
 		DBCollection commodities = mongoTemplate.getCollection("commodity");
 		long count = commodities.count();
 		BigDecimal bd = new BigDecimal(count);
-		for (long i=0;i<bd.divide(new BigDecimal(30l),BigDecimal.ROUND_DOWN).longValue();i++){
+		//for (long i=0;i<bd.divide(new BigDecimal(30l),BigDecimal.ROUND_DOWN).longValue();i++){
 			DBCursor dBCursor = commodities.find().skip(1).limit(10);
 			while(dBCursor.hasNext()){
 				DBObject commodity = dBCursor.next();
 				String category = commodity.get("parentUrl").toString();
 				CommodityDto commodityDto = new CommodityDto();
 				commodityDto.setCategoryUrl(category);
-				commodity.get("brand");
-				commodity.get("img");
 				
-				
+				String brand = commodity.get("brand").toString();
+				String img = commodity.get("img").toString();
 				String name = commodity.get("title").toString();
+				
 				commodityDto.setBrand((String)commodity.get("brand"));
 				commodityDto.setName(name);
 				commodity.get("url");
 				commodityDtos.add(commodityDto);  
+				
 			}
 			
-		}
+		//}
 		return SUCCESS;
 	}
 
