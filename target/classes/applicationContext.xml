@@ -63,8 +63,7 @@ http://cxf.apache.org/schemas/jaxws.xsd">
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	<!--<bean id="fixedRateTask" class=""></bean>-->
-    <bean id="fixedTimeTask" class="com.toolstar.timer.FixedTimeTask"></bean>
+	<bean id="fixedTimeTask" class="com.toolstar.timer.FixedTimeTask"></bean>
     <bean id="job1"
         class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="fixedTimeTask">
