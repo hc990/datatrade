@@ -33,7 +33,7 @@
 			</interceptor>
 			<interceptor-stack name="needLogined">
 				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="authority" />
+				<!--  <interceptor-ref name="authority" />-->
 			</interceptor-stack>
 		</interceptors>
 		<global-results>
@@ -53,6 +53,8 @@
 		<action name="upload" class="upload">
 			<result name="SUCCESS">/HelloWorld.jsp</result>
 			<result name="input">/menu/Menu.jsp</result>
+		</action>
+		<action name="commodity" class="commodity">
 		</action>
 	</package>
 </struts>
