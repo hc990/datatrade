@@ -1,0 +1,5 @@
+#surefire
+#Mon Apr 14 16:20:32 CST 2014
+user.dir=/home/huangchong/workspace/datatrade
+localRepository=/home/huangchong/.m2/repository
+basedir=/home/huangchong/workspace/datatrade
