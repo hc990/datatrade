@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.GenericXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import com.mongodb.BasicDBObject;
@@ -25,6 +27,7 @@ import crawler.CrawlerGAJPage;
 import crawler.CrawlerPage;
 import domain.Commodity;
 import domain.CommodityDetail;
+import dto.CommodityDto;
 
 public class ETLMongoToMysqlTest extends TestCase {
 
@@ -215,8 +218,109 @@ public class ETLMongoToMysqlTest extends TestCase {
 	// }
 	// }
 
+//	@Test
+//	public void testETL() {
+//		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
+//		try {
+//			ctx.load("applicationContext.xml");
+//			MongoTemplate mongoTemplate = (MongoTemplate) ctx
+//					.getBean("mongoTemplate");
+//			HibernateTemplate hibernateTemplate = (HibernateTemplate) ctx
+//					.getBean("hibernateTemplate");
+//
+//			DBCollection bies = mongoTemplate.getCollection("biz");
+//			DBCollection commodities = mongoTemplate.getCollection("commodity");
+//			Long count = Long.valueOf(commodities.count()); 
+//			BigDecimal bd = new BigDecimal(count);
+//			int j = 0;
+//			for (long i = 0; i <= bd.divide(new BigDecimal(30l),
+//					BigDecimal.ROUND_DOWN).longValue(); i++) {
+//				DBCursor dBCursor = null;
+//				dBCursor = commodities.find().skip(j).limit(30);
+//				while (dBCursor.hasNext()) {
+//					Commodity commodity = new Commodity();
+//					DBObject dboc = (DBObject) dBCursor.next();
+//					// int t = 0;
+//					// int z = 0;
+//					if (dboc != null) {
+//						String url = (String) dboc.get("url");
+//						System.out.println(url);
+//						DBObject dbo = bies.findOne(new BasicDBObject(
+//								"parentUrl", url));
+//						String name = (String) dbo.get("dname");
+//						if (!StringUtils.isEmpty(name)) {
+//							commodity.setOriginplace(url);
+//							commodity.setName(StringUtils.isEmpty(name) ? ""
+//									: name.trim());
+//							System.out.println(dbo.get("dprice"));
+//							String price = (String) dbo.get("dprice");
+//							price = StringUtils.isEmpty(price) ? "0.0" : price
+//									.trim();
+//							if (price.indexOf("~") > 0) {
+//								price = price.substring(price.indexOf("￥") + 1,
+//										price.indexOf("~")).replaceAll(",", "");
+//								commodity.setPrice(Float.parseFloat(price));
+//							} else {
+//								if (price.indexOf("-") >= 0) {
+//									commodity.setPrice(Float
+//											.parseFloat(("0.0")));
+//								} else {
+//									price = price.substring(
+//											price.indexOf("￥") + 1,
+//											price.length()).replaceAll(",", "");
+//									commodity.setPrice(Float
+//											.parseFloat((price)));
+//								}
+//							}
+//							commodity.setBrand((String) dbo.get("dbrand"));
+//							System.out.println(dbo.get("dsalesnumber"));
+//							String number = (String) dbo.get("dsalesnumber");
+//							commodity.setDescription((String) dboc.get("img"));
+//							commodity.setStatus(0);
+//							List<DBObject> titles = (List<DBObject>) dbo
+//									.get("title");
+//							List<DBObject> details = (List<DBObject>) dbo
+//									.get("detail");
+//							int numObj = details.size() / titles.size();
+//							if (numObj > 1) {
+//								System.out.println("dfasdfdsf");
+//							}
+//							List<CommodityDetail> commodityDetails = new ArrayList<CommodityDetail>();
+//							for (int v = 0; v < numObj; v++) {
+//								for (int b = 0; b < titles.size(); b++) {
+//									DBObject title = (DBObject) titles.get(b);
+//									CommodityDetail commodityDetail = new CommodityDetail();
+//									commodityDetail.setDetailKey(title.get("title")
+//											.toString());
+//									DBObject detail = (DBObject) details.get(b
+//											+ v * titles.size());
+//									commodityDetail.setDetailValue(detail.get("detail")
+//											.toString());
+//									commodityDetail.setCommodity(commodity);
+//									commodityDetail.setDetailnum(v+1);
+//									commodityDetails.add(commodityDetail);
+//								}
+//							}
+//							commodity.setCommodityDetails(commodityDetails);
+//							hibernateTemplate.save(commodity);
+//						}
+//
+//					}
+//
+//				}
+//				j = j + 30;
+//			}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			ctx.close();
+//		}
+//	}
+//	
+	
 	@Test
-	public void testETL() {
+	public void testMongo() {
 		GenericXmlApplicationContext ctx = new GenericXmlApplicationContext();
 		try {
 			ctx.load("applicationContext.xml");
@@ -227,86 +331,27 @@ public class ETLMongoToMysqlTest extends TestCase {
 
 			DBCollection bies = mongoTemplate.getCollection("biz");
 			DBCollection commodities = mongoTemplate.getCollection("commodity");
-			Long count = Long.valueOf(commodities.count()); 
-			BigDecimal bd = new BigDecimal(count);
-			int j = 0;
-			for (long i = 0; i <= bd.divide(new BigDecimal(30l),
-					BigDecimal.ROUND_DOWN).longValue(); i++) {
-				DBCursor dBCursor = null;
-				dBCursor = commodities.find().skip(j).limit(30);
-				while (dBCursor.hasNext()) {
-					Commodity commodity = new Commodity();
-					DBObject dboc = (DBObject) dBCursor.next();
-					// int t = 0;
-					// int z = 0;
-					if (dboc != null) {
-						String url = (String) dboc.get("url");
-						System.out.println(url);
-						DBObject dbo = bies.findOne(new BasicDBObject(
-								"parentUrl", url));
-						String name = (String) dbo.get("dname");
-						if (!StringUtils.isEmpty(name)) {
-							commodity.setOriginplace(url);
-							commodity.setName(StringUtils.isEmpty(name) ? ""
-									: name.trim());
-							System.out.println(dbo.get("dprice"));
-							String price = (String) dbo.get("dprice");
-							price = StringUtils.isEmpty(price) ? "0.0" : price
-									.trim();
-							if (price.indexOf("~") > 0) {
-								price = price.substring(price.indexOf("￥") + 1,
-										price.indexOf("~")).replaceAll(",", "");
-								commodity.setPrice(Float.parseFloat(price));
-							} else {
-								if (price.indexOf("-") >= 0) {
-									commodity.setPrice(Float
-											.parseFloat(("0.0")));
-								} else {
-									price = price.substring(
-											price.indexOf("￥") + 1,
-											price.length()).replaceAll(",", "");
-									commodity.setPrice(Float
-											.parseFloat((price)));
-								}
-							}
-							commodity.setBrand((String) dbo.get("dbrand"));
-							System.out.println(dbo.get("dsalesnumber"));
-							String number = (String) dbo.get("dsalesnumber");
-							commodity.setDescription((String) dboc.get("img"));
-							commodity.setStatus(0);
-							List<DBObject> titles = (List<DBObject>) dbo
-									.get("title");
-							List<DBObject> details = (List<DBObject>) dbo
-									.get("detail");
-							int numObj = details.size() / titles.size();
-							if (numObj > 1) {
-								System.out.println("dfasdfdsf");
-							}
-							List<CommodityDetail> commodityDetails = new ArrayList<CommodityDetail>();
-							for (int v = 0; v < numObj; v++) {
-								for (int b = 0; b < titles.size(); b++) {
-									DBObject title = (DBObject) titles.get(b);
-									CommodityDetail commodityDetail = new CommodityDetail();
-									commodityDetail.setDetailKey(title.get("title")
-											.toString());
-									DBObject detail = (DBObject) details.get(b
-											+ v * titles.size());
-									commodityDetail.setDetailValue(detail.get("detail")
-											.toString());
-									commodityDetail.setCommodity(commodity);
-									commodityDetail.setDetailnum(v+1);
-									commodityDetails.add(commodityDetail);
-								}
-							}
-							commodity.setCommodityDetails(commodityDetails);
-							hibernateTemplate.save(commodity);
-						}
-
-					}
-
-				}
-				j = j + 30;
+			DBCollection subCategories = mongoTemplate.getCollection("subCategory");
+			DBCursor dBCursor = commodities.find().skip(1).limit(10);
+			while(dBCursor.hasNext()){
+				DBObject commodity = dBCursor.next();
+				String category = commodity.get("parentUrl").toString();
+				CommodityDto commodityDto = new CommodityDto();
+				commodityDto.setCategoryUrl(category);		
+				String brand = commodity.get("brand").toString();
+				String img = commodity.get("img").toString();
+				String name = commodity.get("title").toString();
+				String parentUrl = commodity.get("parentUrl").toString();
+				BasicDBObject db = new BasicDBObject(); 
+				db.put("subctg.url", parentUrl);
+				DBObject subCategorie = subCategories.findOne(db);	
+				commodityDto.setBrand((String)commodity.get("brand"));
+				commodityDto.setName(name);
+				commodityDto.setCategoryUrl(subCategorie.get("parentUrl").toString());
+				commodity.get("url");
+	
 			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

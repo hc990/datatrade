@@ -1,0 +1,1 @@
+package mongo.dao;public interface CommodityMongoDao {		void getCommodity();	}

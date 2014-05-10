@@ -10,6 +10,7 @@
 /Users/huangchong/Workspaces/datatrade/src/main/java/dao/impl/CommodityDaoImpl.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/controller/LoginController.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/domain/Category.java
+/Users/huangchong/Workspaces/datatrade/src/main/java/mongo/dao/Impl/CommodityMongoDaoImpl.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/timer/FixedTimeTask.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/dao/impl/UserDaoImpl.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/controller/UploadController.java
@@ -18,6 +19,7 @@
 /Users/huangchong/Workspaces/datatrade/src/main/java/dao/UserDao.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/crawler/dto/Commodity.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/controller/OrderController.java
+/Users/huangchong/Workspaces/datatrade/src/main/java/mongo/dao/CommodityMongoDao.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/service/OrderService.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/domain/Order.java
 /Users/huangchong/Workspaces/datatrade/src/main/java/domain/Basket.java
