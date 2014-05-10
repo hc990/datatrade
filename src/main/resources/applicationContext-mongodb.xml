@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:tx="http://www.springframework.org/schema/tx"   
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			    http://www.springframework.org/schema/data/mongo
+         		http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd"
+				default-autowire="byName">
+	<mongo:mongo host="127.0.0.1" port="27017">
+	    <mongo:options slave-ok="true"/>
+	</mongo:mongo>
+	<mongo:db-factory dbname="toolstardb" mongo-ref="mongo"/>
+    <bean id="mappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext" />   
+    <bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">  
+        <constructor-arg index="0" ref="mongoDbFactory" />  
+        <constructor-arg index="1" ref="mappingContext" />  
+        <property name="typeMapper" ref="defaultMongoTypeMapper" />
+    </bean>   
+    <bean id="defaultMongoTypeMapper" class="org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper">  
+        <constructor-arg>  
+            <null />
+        </constructor-arg>  
+    </bean>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">  
+        <constructor-arg index="0"  ref="mongoDbFactory" />  
+        <constructor-arg index="1"  ref="mappingMongoConverter" />  
+        <property name="writeConcern" value="SAFE" />
+    </bean>
+    <context:component-scan base-package="com.toolstar.repository" />
+</beans>
+      
