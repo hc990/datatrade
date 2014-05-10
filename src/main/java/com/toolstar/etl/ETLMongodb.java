@@ -28,7 +28,7 @@ import com.toolstar.repository.mongodb.CategoryMongoRepository;
 import com.toolstar.repository.mongodb.CommodityMongoRepository;
 
 /**
- * 数据清洗代码 分类数据清理
+ * �唳�皜��隞�� ��掩�唳�皜��
  * 
  * @author huangchong
  * @since 2013.12
@@ -105,7 +105,7 @@ public class ETLMongodb {
 							for (DBObject subsubsubsubCtg : subsubsubsubCtgs) {
 								System.out.println(subsubsubsubCtg
 										.get("subName"));
-								if ("更多>>".equals(subsubsubsubCtg
+								if ("�游�>>".equals(subsubsubsubCtg
 										.get("subName").toString()))
 									continue;
 								categoryName.append("/").append(
@@ -176,16 +176,16 @@ public class ETLMongodb {
 														% titles.size());
 												DBObject detail = details
 														.get(q);
-												if ("现价".equals(title
+												if ("".equals(title
 														.get("title"))) {
 													String priceStr = detail
 															.get("detail")
 															.toString()
-															.replace("￥", "")
+															.replace("", "")
 															.replaceAll(",", "");
 													System.out
 															.println(priceStr);
-													if (!"停止销售"
+													if (!" "
 															.equals(priceStr)) {
 														Commodity commodity = new Commodity(
 																commodityGroup,
