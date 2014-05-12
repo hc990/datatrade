@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -36,7 +37,10 @@ public class CommodityMongoRepository implements CommodityRepository {
 	@Override
 	public Page<Commodity> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
-		return null;
+        Query query = Query.query(new Criteria()).skip((pageable.getPageNumber()-1)*10).limit(10);  
+        List<Commodity> commodities = operations.find(query, Commodity.class);
+        List<Commodity> allCommodities = operations.findAll(Commodity.class);
+		return new PageImpl<Commodity>(commodities,pageable,allCommodities.size());
 	}
 
 	@Override

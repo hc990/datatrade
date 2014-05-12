@@ -120,7 +120,7 @@ public class CrawlerGAJImpl implements Crawler {
 //			conn = (HttpURLConnection) pageUrl.openConnection(proxy);
 			conn = (HttpURLConnection) pageUrl.openConnection();
 			conn.connect();
-			// ��ӡ������Ӧ��ͷ���ļ�
+			//
 			Map<String, List<String>> headers = conn.getHeaderFields();
 			List<String> header = headers.get(null);
 			if (header.get(0) != null
