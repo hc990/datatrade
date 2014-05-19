@@ -26,27 +26,28 @@ public class CategoryServiceImplTest {
 				new String[] { "applicationContext-mongodb.xml" });
 		CategoryRepository categoryRepository = context.getBean(
 				"categoryMongoRepository", CategoryMongoRepository.class);
-		String tsNo = "4-1";
-		int level = Integer.parseInt(tsNo.split("-")[0]);
-		Category category = null;
-		switch (level) {
-		case 1:
-			category = categoryRepository.findByTsNo("tsNo", tsNo);
-			break;
-		case 2:
-			category = categoryRepository.findByTsNo("categorys.tsNo", tsNo);
-			break;
-		case 3:
-			category = categoryRepository.findByTsNo("categorys.categorys.tsNo", tsNo);
-			break;
-		case 4:
-			category = categoryRepository.findByTsNo("categorys.categorys.categorys.tsNo", tsNo);
-			break;
-		case 5:
-			break;
-		default:
-			break;
-		}
+		String tsNo = "0-0/1-0/2-0/3-9/4-8";
+		System.out.println(tsNo.length());
+//		Category category;
+//		switch (tsNo.length()) {
+//		case 1:
+//			category = categoryRepository.findByTsNo("tsNo", tsNo);
+//			break;
+//		case 2:
+//			category = categoryRepository.findByTsNo("categorys.tsNo", tsNo);
+//			break;
+//		case 3:
+//			category = categoryRepository.findByTsNo("categorys.categorys.tsNo", tsNo);
+//			break;
+//		case 4:
+//			category = categoryRepository.findByTsNo("categorys.categorys.categorys.tsNo", tsNo);
+//			break;
+//		case 5:
+//			break;
+//		default:
+//			break;
+//		}
+		
 //		System.out.println(category.getCategorys());
 	}
 }

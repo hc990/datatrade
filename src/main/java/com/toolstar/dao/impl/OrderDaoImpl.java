@@ -19,6 +19,7 @@ public class OrderDaoImpl implements OrderDao {
 	private HibernateTemplate hibernateTemplate;	
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<Order> getOrders(User user) {
 		// TODO Auto-generated method stub
 		return hibernateTemplate.findByExample(user);  
