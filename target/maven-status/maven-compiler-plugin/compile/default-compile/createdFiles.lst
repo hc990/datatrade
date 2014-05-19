@@ -11,11 +11,11 @@ com/toolstar/mongodb/entity/Commodity.class
 com/toolstar/mongodb/entity/CommodityGroup.class
 com/toolstar/etl/ETLMongodb.class
 com/toolstar/service/OrderService.class
-com/toolstar/service/CommodityService.class
 com/toolstar/etl/ETLMongoToMysql.class
+com/toolstar/service/CommodityService.class
 com/toolstar/repository/CommodityGroupRepository.class
-com/toolstar/repository/mongodb/CommodityGroupMongoRepository.class
 com/toolstar/repository/mongodb/CategoryMongoRepository.class
+com/toolstar/repository/mongodb/CommodityGroupMongoRepository.class
 com/toolstar/service/CategoryService.class
 com/toolstar/repository/mongodb/CommodityMongoRepository.class
 com/toolstar/dao/OrderDao.class
@@ -46,7 +46,7 @@ com/toolstar/controller/HelloWorld.class
 com/toolstar/mongodb/entity/Category.class
 com/toolstar/service/impl/UserServiceImpl.class
 com/toolstar/timer/TestTimer.class
-com/toolstar/mongodb/MongoUtil.class
 com/toolstar/mongodb/entity/CommodityGroupDescription.class
+com/toolstar/mongodb/MongoUtil.class
 com/toolstar/Interceptor/LoginedInterceptor.class
 com/toolstar/crawler/CrawlerGAJImpl.class
