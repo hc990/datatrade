@@ -27,7 +27,7 @@ import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DBCollection;
 import com.mongodb.WriteConcern;
 import com.toolstar.crawler.dto.Commodity;
-import com.toolstar.crawler.dto.DomInfo;
+import com.toolstar.crawler.dto.DomInfo; 
 import com.toolstar.mongodb.MongoUtil;
 
 

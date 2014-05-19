@@ -1,6 +1,7 @@
 package com.toolstar.mongodb.entity;
 
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.util.Assert;
@@ -12,12 +13,18 @@ public class CommodityGroup extends AbstractDocument {
 
 	private String imgUrl = new String();
 
+	private Integer status;
+
+	@DBRef
+	private Category parentCategory;
+
 	@Field("groupDesc")
 	private CommodityGroupDescription commodityGroupDescription;
 
 	@PersistenceConstructor
-	public CommodityGroup(String brand, String name,
-			String parentTsNo, String categoryPath, String tsNo, String priceDes) {
+	public CommodityGroup(String brand, String name, String parentTsNo,
+			String categoryPath, String tsNo, String priceDes,
+			Category parentCategory, Integer status) {
 		Assert.hasText(brand, "brand must not be null or empty!");
 		Assert.hasText(name, "name must not be null or empty!");
 		Assert.hasText(parentTsNo, "categoryPath must not be null or empty!");
@@ -29,11 +36,14 @@ public class CommodityGroup extends AbstractDocument {
 		this.tsNo = tsNo;
 		this.priceDes = priceDes;
 		this.categoryPath = categoryPath;
+		this.parentCategory = parentCategory;
+		this.status = status;
 	}
 
 	public CommodityGroup getCopy() {
 		return new CommodityGroup(this.brand, this.name, this.parentTsNo,
-				this.tsNo, this.priceDes, this.categoryPath);
+				this.tsNo, this.priceDes, this.categoryPath,
+				this.parentCategory, this.status);
 	}
 
 	public String getBrand() {
@@ -66,6 +76,14 @@ public class CommodityGroup extends AbstractDocument {
 
 	public String getCategoryPath() {
 		return categoryPath;
+	}
+
+	public Category getParentCategory() {
+		return parentCategory;
+	}
+
+	public Integer getStatus() {
+		return status;
 	}
 
 	public CommodityGroupDescription getCommodityGroupDescription() {

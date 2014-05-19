@@ -12,4 +12,5 @@ public interface CommodityRepository extends
 
 	@Query("{ ?0 : ?1 }")
 	List<Commodity> findByAttributes(String key, String value);
+
 }

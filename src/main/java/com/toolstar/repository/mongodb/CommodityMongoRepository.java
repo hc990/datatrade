@@ -39,8 +39,9 @@ public class CommodityMongoRepository implements CommodityRepository {
 		// TODO Auto-generated method stub
         Query query = Query.query(new Criteria()).skip((pageable.getPageNumber()-1)*10).limit(10);  
         List<Commodity> commodities = operations.find(query, Commodity.class);
-        List<Commodity> allCommodities = operations.findAll(Commodity.class);
-		return new PageImpl<Commodity>(commodities,pageable,allCommodities.size());
+        query = Query.query(new Criteria());
+        long size = operations.count(query, Commodity.class);
+		return new PageImpl<Commodity>(commodities,pageable,size);
 	}
 
 	@Override
@@ -72,7 +73,9 @@ public class CommodityMongoRepository implements CommodityRepository {
 	@Override
 	public Iterable<Commodity> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		Query query = Query.query(new Criteria()).skip(0).limit(10);  
+	    List<Commodity> commodities = operations.find(query, Commodity.class);
+		return commodities;
 	}
 
 	@Override

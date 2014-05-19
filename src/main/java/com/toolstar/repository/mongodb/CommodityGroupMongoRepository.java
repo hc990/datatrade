@@ -2,6 +2,8 @@ package com.toolstar.repository.mongodb;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -36,19 +38,20 @@ public class CommodityGroupMongoRepository implements CommodityGroupRepository {
 	@Override
 	public CommodityGroup findOne(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return operations.findById(id, CommodityGroup.class);
 	}
 
 	@Override
 	public boolean exists(Long id) {
 		// TODO Auto-generated method stub
-		return false;
+		Query query = Query.query(Criteria.where("id").is(id));
+		return operations.exists(query, CommodityGroup.class);
 	}
 
 	@Override
 	public Iterable<CommodityGroup> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return operations.findAll(CommodityGroup.class);
 	}
 
 	@Override
@@ -60,28 +63,32 @@ public class CommodityGroupMongoRepository implements CommodityGroupRepository {
 	@Override
 	public long count() {
 		// TODO Auto-generated method stub
-		return 0;
+		return operations.count(new Query(), CommodityGroup.class);
 	}
 
 	@Override
+	@Deprecated
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	@Deprecated
 	public void delete(CommodityGroup entity) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	@Deprecated
 	public void delete(Iterable<? extends CommodityGroup> entities) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	@Deprecated
 	public void deleteAll() {
 		// TODO Auto-generated method stub
 

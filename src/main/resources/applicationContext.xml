@@ -12,6 +12,7 @@ http://cxf.apache.org/jaxws
 http://cxf.apache.org/schemas/jaxws.xsd">
 	<bean id="hello" class="com.toolstar.controller.HelloWorld" scope="prototype"></bean>
 	<bean id="upload" class="com.toolstar.controller.Upload" scope="prototype"></bean>
+    <bean id="commodity" class="com.toolstar.controller.CommodityController" scope="prototype"></bean>
 	<context:component-scan base-package="com.toolstar" />
 	<bean name="jdbsProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

@@ -9,5 +9,5 @@ public interface CategoryService {
 	
 	List<Category> getCategorys();
  	
-	
+	Category getCategoryByTsNo(String tsNo);
 }

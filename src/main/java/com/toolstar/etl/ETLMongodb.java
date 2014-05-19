@@ -28,15 +28,13 @@ import com.toolstar.repository.mongodb.CategoryMongoRepository;
 import com.toolstar.repository.mongodb.CommodityMongoRepository;
 
 /**
- * 数据清洗代码 分类数据清理
+ * 
  * 
  * @author huangchong
  * @since 2013.12
  * 
  **/
 public class ETLMongodb {
-
-	final static String text = "g";
 
 	@SuppressWarnings("unchecked")
 	public void doCtgEtl() {
@@ -60,15 +58,20 @@ public class ETLMongodb {
 			DBCollection bizDB = MongoUtil.getDBCollection("biz");
 			DBCursor cur = categoryDB.find();
 			int num = 0;
+			Category parentCategory = new Category("--", "--", "category_ts",
+					null, "", new StringBuffer("0-0").toString(), 0);
+			parentCategory = categoryRepository.save(parentCategory);// 刘备
 			while (cur.hasNext()) {
 				DBObject dbo = (DBObject) cur.next();
 				categoryName.append("/").append(
 						dbo.get("categoryName").toString());
 				Category category = new Category(dbo.get("categoryName")
 						.toString(), dbo.get("categoryUrl").toString(), dbo
-						.get("categoryNo").toString(),
+						.get("categoryNo").toString(), parentCategory,
 						new StringBuffer("0-0").toString(), new StringBuffer(
-								"1-").append(num).toString());
+								"0-0").append("/").append("1-").append(num)
+								.toString(), 0);
+				category = categoryRepository.save(category);// 关羽
 				List<DBObject> subCtgs = (List<DBObject>) dbo.get("subCtl");
 				int subnum = 0;
 				for (DBObject subCtg : subCtgs) {
@@ -77,9 +80,13 @@ public class ETLMongodb {
 					Category subCategory = new Category(subCtg.get(
 							"subCategoryName").toString(), subCtg.get(
 							"subCategoryUrl").toString(), subCtg.get(
-							"subCategoryNo").toString(), new StringBuffer("1-")
-							.append(num).toString(), new StringBuffer("2-")
-							.append(subnum).toString());
+							"subCategoryNo").toString(), category,
+							new StringBuffer("0-0").append("/").append("1-")
+									.append(num).toString(), new StringBuffer(
+									"0-0").append("/").append("1-").append(num)
+									.append("/").append("2-").append(subnum)
+									.toString(), 0);
+					subCategory = categoryRepository.save(subCategory);// 周仓
 					List<DBObject> subsubCtgs = (List<DBObject>) subCtg
 							.get("subsubCtl");
 					int subsubnum = 0;
@@ -94,12 +101,20 @@ public class ETLMongodb {
 								"subsubCategoryName").toString(), subsubCtg
 								.get("subsubCategoryUrl").toString(), subsubCtg
 								.get("subsubCategoryNo").toString(),
-								new StringBuffer("2-").append(subnum)
-										.toString(), new StringBuffer("3-")
-										.append(subsubnum).toString());
+								subCategory, new StringBuffer("0-0")
+										.append("/").append("1-").append(num)
+										.append("/").append("2-")
+										.append(subnum).append("/").toString(),
+								new StringBuffer("0-0").append("1-")
+										.append(num).append("/").append("2-")
+										.append(subnum).append("/")
+										.append("3-").append(subsubnum)
+										.append("/").toString(), 0);
+						subsubCategory = categoryRepository
+								.save(subsubCategory);// 校尉
 						List<DBObject> subsubsubsubCtgs = (List<DBObject>) subsubsubCtg
 								.get("subctg");
-						int i = 0, subsubsubnum = 0;
+						int i = 1, subsubsubnum = 0;
 						if (subsubsubsubCtgs != null
 								&& subsubsubsubCtgs.size() > 0) {
 							for (DBObject subsubsubsubCtg : subsubsubsubCtgs) {
@@ -114,12 +129,26 @@ public class ETLMongodb {
 								Category subsubsubCategory = new Category(
 										subsubsubsubCtg.get("subName")
 												.toString(), subsubsubsubCtg
-		 									.get("url").toString(),
-										String.valueOf(i), new StringBuffer(
-												"3-").append(subsubnum)
-												.toString(), new StringBuffer(
-												"4-").append(subsubsubnum)
-												.toString());
+												.get("url").toString(),
+										new StringBuffer(subsubCategory
+												.getCtgNo()).append("_")
+												.append(i).toString(),
+										subsubCategory, new StringBuffer("0-0")
+												.append("/").append("1-")
+												.append(num).append("/")
+												.append("2-").append(subnum)
+												.append("/").append("3-")
+												.append(subsubnum).toString(),
+										new StringBuffer("0-0").append("/")
+												.append("1-").append(num)
+												.append("/").append("2-")
+												.append(subnum).append("/")
+												.append("3-").append(subsubnum)
+												.append("/").append("4-")
+												.append(subsubsubnum)
+												.toString(), 0);
+								subsubsubCategory = categoryRepository
+										.save(subsubsubCategory);// 校尉
 								DBCursor commoditys = commodityDB
 										.find(new BasicDBObject("parentUrl",
 												subsubsubsubCtg.get("url")));
@@ -132,8 +161,8 @@ public class ETLMongodb {
 											.findOne(new BasicDBObject(
 													"parentUrl", comm
 															.get("url")));
-									if (biz != null&&biz.get(
-											"dprice")!=null) {
+									if (biz != null
+											&& biz.get("dprice") != null) {
 										CommodityGroup commodityGroup = new CommodityGroup(
 												comm.get("brand").toString(),
 												comm.get("title").toString(),
@@ -149,8 +178,8 @@ public class ETLMongodb {
 												categoryName.toString(),
 												new StringBuffer("5-").append(
 														commNum).toString(),
-												comm.get("price").toString());
-                                        System.out.println(biz);
+												comm.get("price").toString(),subsubsubCategory,0);
+										System.out.println(biz);
 										CommodityGroupDescription commodityGroupDescription = new CommodityGroupDescription(
 												comm.get("brand").toString(),
 												comm.get("title").toString(),
@@ -185,8 +214,7 @@ public class ETLMongodb {
 															.replaceAll(",", "");
 													System.out
 															.println(priceStr);
-													if (!"停止销售"
-															.equals(priceStr)) {
+													if (!"停止销售".equals(priceStr)) {
 														Commodity commodity = new Commodity(
 																commodityGroup,
 																"",
@@ -233,17 +261,18 @@ public class ETLMongodb {
 										commNum++;
 									}
 								}
-								subsubCategory.addSubCtg(subsubsubCategory);
+								// subsubCategory.addSubCtg(subsubsubCategory);
 								subsubsubnum++;
+								i++;
 							}
 						}
-						subCategory.addSubCtg(subsubCategory);
+						// subCategory.addSubCtg(subsubCategory);
 						subsubnum++;
 					}
-					category.addSubCtg(subCategory);
+					// category.addSubCtg(subCategory);
 					subnum++;
 				}
-				categoryRepository.save(category);
+				// categoryRepository.save(category);
 				num++;
 			}
 		} catch (Exception e) {
@@ -253,11 +282,7 @@ public class ETLMongodb {
 	}
 
 	public void doCmdEtl() {
-		// ApplicationContext context = new ClassPathXmlApplicationContext(
-		// "applicationContext-mongodb.xml");
-
 		try {
-
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
