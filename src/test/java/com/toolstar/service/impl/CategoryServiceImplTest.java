@@ -24,19 +24,19 @@ public class CategoryServiceImplTest {
 	@Test
 	public void testGetCategorys() {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				new String[] { "applicationContext-mongodb.xml","" });
-		CategoryRepository categoryRepository = context.getBean(
-				"categoryMongoRepository", CategoryMongoRepository.class);
+				new String[] { "applicationContext.xml" });
+//		CategoryRepository categoryRepository = context.getBean(
+//				"categoryMongoRepository", CategoryMongoRepository.class);
 		// String tsNo = "0-0/1-0/2-0/3-9/4-8";
 		// System.out.println(tsNo.length());
 		 String tsNo = "0-0/1-0/2-0/3-9";
 		 System.out.println(tsNo.length());
-//		String tsNo = "0-0/1-0/2-0";
-//		System.out.println(tsNo.length());
+        //String tsNo = "0-0/1-0/2-0";
+        //System.out.println(tsNo.length());
 		// tsNo = "0-0/1-0";
 		// System.out.println(tsNo.length());
-		
-
-//		System.out.println(categorys);
+		CategoryService categoryService = context.getBean("categoryService",CategoryServiceImpl.class);
+		List categorys = categoryService.getCategoryByTsNo(tsNo);
+		System.out.println(categorys);
 	}
 }

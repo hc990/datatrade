@@ -40,7 +40,7 @@ public class CommodityController extends ActionSupport {
 	 *        </th> <th>创建时间</th>
 	 **/
 	public String search() throws Exception {
-		//categoryRepository
+		categoryRepository.
 		
 		
 		

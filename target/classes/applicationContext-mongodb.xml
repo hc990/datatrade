@@ -32,6 +32,7 @@
         <constructor-arg index="1"  ref="mappingMongoConverter" />  
         <property name="writeConcern" value="SAFE" />
     </bean>
+    <context:component-scan base-package="com.toolstar.service" />
     <context:component-scan base-package="com.toolstar.repository" />
 </beans>
       
