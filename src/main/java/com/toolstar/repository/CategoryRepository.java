@@ -12,6 +12,6 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 	@Query("{ ?0 : ?1 }")
 	List<Category> findByAttributes(String key, String value);
 	
-	Category findByTsNo(String tsNoKey,String tsNoValue);
+	public Category findByTsNo(String tsNo);
 
 }

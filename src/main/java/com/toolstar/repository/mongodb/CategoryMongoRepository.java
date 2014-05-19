@@ -105,9 +105,9 @@ public class CategoryMongoRepository implements CategoryRepository {
 	}
 
 	@Override
-	public Category findByTsNo(String tsNoKey,String value) {
+	public  Category findByTsNo(String tsNo) {  
 		// TODO Auto-generated method stub
-		Query query = Query.query(Criteria.where(tsNoKey).is(value));
+		Query query = Query.query(Criteria.where("tsNo").is(tsNo));
 		return operations.findOne(query, Category.class);
 	}
 

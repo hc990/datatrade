@@ -1,5 +1,6 @@
 package com.toolstar.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,23 +22,41 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Category getCategoryByTsNo(String tsNo) {
+	public List<Category> getCategoryByTsNo(String tsNo) {
 		// TODO Auto-generated method stub
-		int level = Integer.parseInt(tsNo.split("-")[0]);
-		switch (level) {
-		case 1:
-			return categoryRepository.findByTsNo("", tsNo);
-		case 2:
-			return categoryRepository.findByTsNo("", tsNo);
-		case 3:
-			return categoryRepository.findByTsNo("", tsNo);
-		case 4:
-			return categoryRepository.findByTsNo("", tsNo);
-		case 5:
-			return null;
+		Category category = null;
+		List<Category> categorys = new ArrayList<Category>();
+		switch (tsNo.length()) {
+		case 19:
+			category = categoryRepository.findByTsNo(tsNo);
+			categorys.add(category);
+		case 15:
+			if (category != null)
+				category = categoryRepository.findByTsNo(category
+						.getParentTsNo());
+			else
+				category = categoryRepository.findByTsNo(tsNo);
+			categorys.add(category);
+		case 11:
+			if (category != null)
+				category = categoryRepository.findByTsNo(category
+						.getParentTsNo());
+			else
+				category = categoryRepository.findByTsNo(tsNo);
+			categorys.add(category);
+		case 7:
+			if (category != null)
+				category = categoryRepository.findByTsNo(category
+						.getParentTsNo());
+			else
+				category = categoryRepository.findByTsNo(tsNo);
+			categorys.add(category);
+			break;
 		default:
-			return null;
+			category = categoryRepository.findByTsNo(tsNo);
+			break;
 		}
+		return categorys;
 	}
 
 }
