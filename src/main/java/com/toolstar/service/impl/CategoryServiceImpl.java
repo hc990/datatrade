@@ -2,6 +2,7 @@ package com.toolstar.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,12 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getCategorys() {
 		// TODO Auto-generated method stub
-		List<Category> categorys = categoryRepository.findByAttributes("", "");
+		List<Category> categorys = (List<Category>)categoryRepository.findAll();
 		return categorys;
 	}
 
 	@Override
-	public List<Category> getCategoryByTsNo(String tsNo) {
+	public List<Category> getCategoriesByTsNo(String tsNo) {
 		// TODO Auto-generated method stub
 		Category category = null;
 		List<Category> categorys = new ArrayList<Category>();
@@ -61,4 +62,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return categorys;
 	}
 
+	@Override
+	public Set<Category> getSubCategories(String tsNo) {
+		// TODO Auto-generated method stub
+		Category category = categoryRepository.findByTsNo(tsNo);
+		return category.getSubCategories();
+	}
 }

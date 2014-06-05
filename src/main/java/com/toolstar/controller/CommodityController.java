@@ -1,19 +1,18 @@
 package com.toolstar.controller;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Collection;
+import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.toolstar.dto.CommodityDto;
+import com.toolstar.mongodb.entity.Category;
 import com.toolstar.mongodb.entity.Commodity;
-import com.toolstar.repository.CategoryRepository;
-import com.toolstar.repository.CommodityRepository;
+import com.toolstar.service.CategoryService;
+import com.toolstar.service.CommodityService;
 
 public class CommodityController extends ActionSupport {
 	/**
@@ -24,36 +23,35 @@ public class CommodityController extends ActionSupport {
 	Page<Commodity> commoditys;
 
 	@Autowired
-	CommodityRepository commodityRepository;
-	
+	CategoryService categoryService;
+
 	@Autowired
-	CategoryRepository categoryRepository;
-	
+	CommodityService commodityService;
+
 	private String tsNo;
 
-	private List<CommodityDto> commodityDtos = new ArrayList<CommodityDto>();
-	
+	private Collection<Commodity> rtn = new ArrayList<Commodity>();
+
 	/**
 	 * @author huangchong
-	 * @since 2014.2.22 
-	 * <th>商品名称</th> <th>分类</th> <th>品牌</th> <th>价格</th> <th>图片
+	 * @since 2014.2.22 <th>商品名称</th> <th>分类</th> <th>品牌</th> <th>价格</th> <th>图片
 	 *        </th> <th>创建时间</th>
 	 **/
 	public String search() throws Exception {
-		categoryRepository.
-		
-		
-		
-//		for (Iterator<Commodity> commodities = commodityRepository.
-//				.iterator(); commodities.hasNext();) {
-//			Commodity commodity = commodities.next();
-//			CommodityDto commodityDto = new CommodityDto();
-//			commodityDto.setCategoryUrl(commodity.getCategoryName());
-//			commodityDto.setBrand(commodity.getParentTsNo());
-//			commodityDto.setName(commodity.getPrice().toString());
-//			commodityDtos.add(commodityDto);
-//		}
 		// TODO Auto-generated method stub
+		Set<Category> categories = categoryService.getSubCategories(tsNo);
+		//Collection<Commodity> rtn = new ArrayList<Commodity>();
+		for (Category category : categories) {
+			Set<Category> subCategories = category.getSubCategories();
+			for (Category subCategory : subCategories) {
+				Set<Category> subsubCategories = subCategory.getSubCategories();
+				for (Category subsubCategory : subsubCategories) {
+					Collection<Commodity> commodityGroups = commodityService
+							.getCommoditiesByPTsNo(subsubCategory.getTsNo());
+					rtn = CollectionUtils.union(rtn, commodityGroups);
+				}
+			}
+		}
 		return SUCCESS;
 	}
 
@@ -61,12 +59,13 @@ public class CommodityController extends ActionSupport {
 		return commoditys;
 	}
 
-	public List<CommodityDto> getCommodityDtos() {
-		return commodityDtos;
+
+	public Collection<Commodity> getRtn() {
+		return rtn;
 	}
 
-	public void setCommodityDtos(List<CommodityDto> commodityDtos) {
-		this.commodityDtos = commodityDtos;
+	public void setRtn(Collection<Commodity> rtn) {
+		this.rtn = rtn;
 	}
 
 	public String getTsNo() {

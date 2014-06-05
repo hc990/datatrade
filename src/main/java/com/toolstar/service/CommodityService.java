@@ -1,8 +1,13 @@
 package com.toolstar.service;
 
-import com.toolstar.domain.Commodity;
+import java.util.Collection;
 
-public interface CommodityService {
-	void signupCommodity(Commodity commodity);
+import com.toolstar.mongodb.entity.Commodity;
 
-}
+public interface CommodityService {  
+	
+	Commodity saveCommodity(Commodity commodity);
+  
+	Collection<Commodity> getCommoditiesByPTsNo(String parentTsNo);
+ }
+  

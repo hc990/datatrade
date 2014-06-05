@@ -28,8 +28,6 @@ import com.toolstar.repository.mongodb.CategoryMongoRepository;
 import com.toolstar.repository.mongodb.CommodityMongoRepository;
 
 /**
- * 
- * 
  * @author huangchong
  * @since 2013.12
  * 
@@ -59,7 +57,8 @@ public class ETLMongodb {
 			DBCursor cur = categoryDB.find();
 			int num = 0;
 			Category parentCategory = new Category("--", "--", "category_ts",
-					null, "", new StringBuffer("0-0").toString(), 0);
+//					null, 
+					"", new StringBuffer("0-0").toString(), 0);
 			parentCategory = categoryRepository.save(parentCategory);// 刘备
 			while (cur.hasNext()) {
 				DBObject dbo = (DBObject) cur.next();
@@ -67,10 +66,11 @@ public class ETLMongodb {
 						dbo.get("categoryName").toString());
 				Category category = new Category(dbo.get("categoryName")
 						.toString(), dbo.get("categoryUrl").toString(), dbo
-						.get("categoryNo").toString(), parentCategory,
+						.get("categoryNo").toString(), 
+						//parentCategory,
 						new StringBuffer("0-0").toString(), new StringBuffer(
 								"0-0").append("/").append("1-").append(num)
-								.toString(), 0);
+								.toString(), 0);		
 				category = categoryRepository.save(category);// 关羽
 				List<DBObject> subCtgs = (List<DBObject>) dbo.get("subCtl");
 				int subnum = 0;
@@ -80,7 +80,8 @@ public class ETLMongodb {
 					Category subCategory = new Category(subCtg.get(
 							"subCategoryName").toString(), subCtg.get(
 							"subCategoryUrl").toString(), subCtg.get(
-							"subCategoryNo").toString(), category,
+							"subCategoryNo").toString(), 
+							//category,
 							new StringBuffer("0-0").append("/").append("1-")
 									.append(num).toString(), new StringBuffer(
 									"0-0").append("/").append("1-").append(num)
@@ -101,7 +102,8 @@ public class ETLMongodb {
 								"subsubCategoryName").toString(), subsubCtg
 								.get("subsubCategoryUrl").toString(), subsubCtg
 								.get("subsubCategoryNo").toString(),
-								subCategory, new StringBuffer("0-0")
+								//subCategory, 
+								new StringBuffer("0-0")
 										.append("/").append("1-").append(num)
 										.append("/").append("2-")
 										.append(subnum).toString(),
@@ -133,7 +135,8 @@ public class ETLMongodb {
 										new StringBuffer(subsubCategory
 												.getCtgNo()).append("_")
 												.append(i).toString(),
-										subsubCategory, new StringBuffer("0-0")
+										//subsubCategory, 
+										new StringBuffer("0-0")
 												.append("/").append("1-")
 												.append(num).append("/")
 												.append("2-").append(subnum)
@@ -148,133 +151,147 @@ public class ETLMongodb {
 												.append(subsubsubnum)
 												.toString(), 0);
 								subsubsubCategory = categoryRepository
-										.save(subsubsubCategory);// 校尉
-//								DBCursor commoditys = commodityDB
-//										.find(new BasicDBObject("parentUrl",
-//												subsubsubsubCtg.get("url")));
-//								int commNum = 0;
-//								while (commoditys.hasNext()) {
-//									DBObject comm = commoditys.next();
-//									comm.get("num");
-//									System.out.println(comm.get("url"));
-//									DBObject biz = bizDB
-//											.findOne(new BasicDBObject(
-//													"parentUrl", comm
-//															.get("url")));
-//									if (biz != null
-//											&& biz.get("dprice") != null) {
-//										CommodityGroup commodityGroup = new CommodityGroup(
-//												comm.get("brand").toString(),
-//												comm.get("title").toString(),
-//												new StringBuffer("1-")
-//														.append(num)
-//														.append("/2-")
-//														.append(subnum)
-//														.append("/3-")
-//														.append(subsubnum)
-//														.append("/4-")
-//														.append(subsubsubnum)
-//														.toString(),
-//												categoryName.toString(),
-//												new StringBuffer("5-").append(
-//														commNum).toString(),
-//												comm.get("price").toString(),subsubsubCategory,0);
-//										System.out.println(biz);
-//										CommodityGroupDescription commodityGroupDescription = new CommodityGroupDescription(
-//												comm.get("brand").toString(),
-//												comm.get("title").toString(),
-//												categoryName.toString(), biz
-//														.get("dcontent")
-//														.toString(), biz.get(
-//														"dprice").toString());
-//										commodityGroup
-//												.setCommodityGroupDescription(commodityGroupDescription);
-//										commodityGroup = commodityGroupRepository
-//												.save(commodityGroup);
-//										List<DBObject> titles = (List<DBObject>) biz
-//												.get("title");
-//										List<DBObject> details = (List<DBObject>) biz
-//												.get("detail");
-//										List<Commodity> commodities = new ArrayList<Commodity>();
-//										for (int z = 1; z < details.size()
-//												/ titles.size() + 1; z++) {
-//											for (int q = (z - 1)
-//													* titles.size(); q < z
-//													* titles.size(); q++) {
-//												DBObject title = titles.get(q
-//														% titles.size());
-//												DBObject detail = details
-//														.get(q);
-//												if ("现价".equals(title
-//														.get("title"))) {
-//													String priceStr = detail
-//															.get("detail")
-//															.toString()
-//															.replace("￥", "")
-//															.replaceAll(",", "");
-//													System.out
-//															.println(priceStr);
-//													if (!"停止销售".equals(priceStr)) {
-//														Commodity commodity = new Commodity(
-//																commodityGroup,
-//																"",
-//																categoryName
-//																		.toString(),
-//																new StringBuffer(
-//																		"1-")
-//																		.append(num)
-//																		.append("/2-")
-//																		.append(subnum)
-//																		.append("/3-")
-//																		.append(subsubnum)
-//																		.append("/4-")
-//																		.append(subsubsubnum)
-//																		.append("/5-")
-//																		.append(commNum)
-//																		.toString(),
-//																new BigDecimal(
-//																		priceStr));
-//														commodities
-//																.add(commodity);
-//													}
-//
-//												}
-//											}
-//										}
-//										for (int b = 0; b < commodities.size(); b++) {
-//											Commodity commodity = commodities
-//													.get(b);
-//											for (int q = b * titles.size(); q < (b + 1)
-//													* titles.size(); q++) {
-//												DBObject title = titles.get(q
-//														% titles.size());
-//												DBObject detail = details
-//														.get(q);
-//												CommodityDescription commodityDescription = new CommodityDescription(
-//														title.toString(),
-//														detail.toString());
-//												commodity
-//														.addDescription(commodityDescription);
-//											}
-//											commodityRepository.save(commodity);
-//										}
-//										commNum++;
-//									}
-//								}
-								// subsubCategory.addSubCtg(subsubsubCategory);
+										.save(subsubsubCategory);// 军士
+								DBCursor commoditys = commodityDB
+										.find(new BasicDBObject("parentUrl",
+												subsubsubsubCtg.get("url")));
+								int commNum = 0;
+								while (commoditys.hasNext()) {
+									DBObject comm = commoditys.next();
+									comm.get("num");
+									System.out.println(comm.get("url"));
+									DBObject biz = bizDB
+											.findOne(new BasicDBObject(
+													"parentUrl", comm
+															.get("url")));
+									if (biz != null
+											&& biz.get("dprice") != null) {
+										CommodityGroup commodityGroup = new CommodityGroup(
+												comm.get("brand").toString(),
+												comm.get("title").toString(),
+												new StringBuffer("0-0").append("/")
+												        .append("1-")
+														.append(num)
+														.append("/2-")
+														.append(subnum)
+														.append("/3-")
+														.append(subsubnum)
+														.append("/4-")
+ 														.append(subsubsubnum)
+														.toString(),
+												categoryName.toString(),
+												new StringBuffer("0-0").append("/")
+										        .append("1-")
+												.append(num)
+												.append("/2-")
+												.append(subnum)
+												.append("/3-")
+												.append(subsubnum)
+												.append("/4-")
+												.append(subsubsubnum).append("/5-").append(
+														commNum).toString(),
+												comm.get("price").toString(),subsubsubCategory,0);
+										System.out.println(biz);
+										CommodityGroupDescription commodityGroupDescription = new CommodityGroupDescription(
+												comm.get("brand").toString(),
+												comm.get("title").toString(),
+												categoryName.toString(), biz
+														.get("dcontent")
+														.toString(), biz.get(
+														"dprice").toString());
+										commodityGroup
+												.setCommodityGroupDescription(commodityGroupDescription);
+										commodityGroup = commodityGroupRepository
+												.save(commodityGroup);
+										List<DBObject> titles = (List<DBObject>) biz
+												.get("title");
+										List<DBObject> details = (List<DBObject>) biz
+												.get("detail");
+										List<Commodity> commodities = new ArrayList<Commodity>();
+										for (int z = 1; z < details.size()
+												/ titles.size() + 1; z++) {
+											for (int q = (z - 1)
+													* titles.size(); q < z
+													* titles.size(); q++) {
+												DBObject title = titles.get(q
+														% titles.size());
+												DBObject detail = details
+														.get(q);
+												if ("现价".equals(title
+														.get("title"))) {
+													String priceStr = detail
+															.get("detail")
+															.toString()
+															.replace("￥", "")
+															.replaceAll(",", "");
+													System.out
+															.println(priceStr);
+													if (!"停止销售".equals(priceStr)) {
+														Commodity commodity = new Commodity(
+																commodityGroup,
+																"",
+																categoryName
+																		.toString(),
+																		new StringBuffer("0-0").append("/")
+																        .append("1-")
+																		.append(num)
+																		.append("/2-")
+																		.append(subnum)
+																		.append("/3-")
+																		.append(subsubnum)
+																		.append("/4-")
+																		.append(subsubsubnum)
+																		.append("/5-")
+																		.append(commNum)
+																		.toString(),
+																new BigDecimal(
+																		priceStr));
+														commodities
+																.add(commodity);
+													}
+
+												}
+											}
+										}
+										for (int b = 0; b < commodities.size(); b++) {
+											Commodity commodity = commodities
+													.get(b);
+											for (int q = b * titles.size(); q < (b + 1)
+													* titles.size(); q++) {
+												DBObject title = titles.get(q
+														% titles.size());
+												DBObject detail = details
+														.get(q);
+												CommodityDescription commodityDescription = new CommodityDescription(
+														title.toString(),
+														detail.toString());
+												commodity
+														.addDescription(commodityDescription);
+											}
+											commodityRepository.save(commodity);
+										}
+										commNum++;
+									}
+								}
+								subsubCategory.addSubCategory(subsubsubCategory);
 								subsubsubnum++;
 								i++;
 							}
 						}
-						// subCategory.addSubCtg(subsubCategory);
+						subsubCategory = categoryRepository
+								.save(subsubCategory);// 校尉
+						subCategory.addSubCategory(subsubCategory);
 						subsubnum++;
 					}
-					// category.addSubCtg(subCategory);
-					subnum++;
+					subCategory = categoryRepository.save(subCategory);// 周仓
+					category.addSubCategory(subCategory);
+					subnum++;	
 				}
-				// categoryRepository.save(category);
+				category = categoryRepository.save(category);// 关羽
 				num++;
+				parentCategory.addSubCategory(category);
 			}
+			parentCategory = categoryRepository.save(parentCategory);// 刘备
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -11,7 +11,7 @@ import com.toolstar.domain.User;
 @Service
 public class UserServiceImpl {
 
-	@Autowired
+	//@Autowired
 	private OrderDao orderDao;
 
 	public User getUser() {

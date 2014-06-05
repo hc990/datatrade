@@ -1,5 +1,7 @@
 package com.toolstar.repository.mongodb;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -12,8 +14,7 @@ import com.toolstar.repository.CommodityGroupRepository;
 
 @Repository("commodityGroupMongoRepository")
 public class CommodityGroupMongoRepository implements CommodityGroupRepository {
-	
-	
+
 	private final MongoOperations operations;
 
 	@Autowired
@@ -25,8 +26,8 @@ public class CommodityGroupMongoRepository implements CommodityGroupRepository {
 	@Override
 	public <S extends CommodityGroup> S save(S entity) {
 		// TODO Auto-generated method stub
-		 operations.save(entity);
-		 return entity;
+		operations.save(entity);
+		return entity;
 	}
 
 	@Override
@@ -92,6 +93,13 @@ public class CommodityGroupMongoRepository implements CommodityGroupRepository {
 	public void deleteAll() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<CommodityGroup> findByAttributes(String key, String value) {
+		// TODO Auto-generated method stub
+		Query query = Query.query(Criteria.where(key).is(value));
+		return operations.find(query, CommodityGroup.class);
 	}
 
 }

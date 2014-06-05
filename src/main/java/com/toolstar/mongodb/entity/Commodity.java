@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.util.Assert;
 
@@ -15,7 +16,10 @@ public class Commodity extends AbstractDocument {
 	private CommodityGroup commodityGroup;
 	
 	private BigDecimal price;
-	private String imgUrl, categoryName, parentTsNo;
+	private String imgUrl, categoryName;
+	
+	@Indexed(unique = true)
+	private String parentTsNo;
 
 	@PersistenceConstructor
 	public Commodity(CommodityGroup commodityGroup, String imgUrl,

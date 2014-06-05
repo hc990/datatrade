@@ -111,4 +111,13 @@ public class CategoryMongoRepository implements CategoryRepository {
 		return operations.findOne(query, Category.class);
 	}
 
+//	@Override
+//	public Category addSubCategories(Category category,) {
+//		// TODO Auto-generated method stub
+//		Query query = Query.query(Criteria.where("id").is(category.getId()));
+//		Update update = Update.update(key, value);
+//		operations.upsert(query, update, Category.class);
+//		return null;
+//	}
+	
 }

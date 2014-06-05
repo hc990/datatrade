@@ -11,7 +11,7 @@ import com.toolstar.service.OrderService;
 @Service
 public class OrderServiceImpl implements OrderService{
 
-	@Autowired
+	//@Autowired
 	private OrderDao orderDao;  
 	
 	@Override
