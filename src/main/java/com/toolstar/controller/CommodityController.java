@@ -23,7 +23,7 @@ public class CommodityController extends ActionSupport {
 	Page<Commodity> commoditys;
 
 	@Autowired
-	CategoryService categoryService;
+	CategoryService categoryService;  
 
 	@Autowired
 	CommodityService commodityService;
