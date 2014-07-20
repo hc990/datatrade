@@ -30,6 +30,7 @@ public class CommodityServiceImpl implements CommodityService {
 		return commodityRepository.save(commodity);
 	}
   
+	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Commodity> getCommoditiesByPTsNo(String parentTsNo) {
 		Collection<Commodity> rtn = new ArrayList<Commodity>();
@@ -38,8 +39,6 @@ public class CommodityServiceImpl implements CommodityService {
 		for(CommodityGroup commodityGroup:commodityGroups){
 			List<Commodity> commodities = commodityRepository.findByAttributes("parentTsNo", commodityGroup.getTsNo());
 //			for(Commodity commodity:commodities){
-//				
-//				
 //			}
 			rtn = CollectionUtils.union(rtn, commodities);
 		}

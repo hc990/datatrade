@@ -1,5 +1,8 @@
 package com.toolstar.dto;
 
+/**
+ *
+ */
 public class CategoryDto {
 
 	private String ctgName, ctgUrl;

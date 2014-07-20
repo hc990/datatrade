@@ -249,7 +249,6 @@ public class ETLMongodb {
 														commodities
 																.add(commodity);
 													}
-
 												}
 											}
 										}
@@ -270,8 +269,9 @@ public class ETLMongodb {
 											}
 											commodityRepository.save(commodity);
 										}
-										commNum++;
+
 									}
+
 								}
 								subsubCategory.addSubCategory(subsubsubCategory);
 								subsubsubnum++;
@@ -291,7 +291,7 @@ public class ETLMongodb {
 				num++;
 				parentCategory.addSubCategory(category);
 			}
-			parentCategory = categoryRepository.save(parentCategory);// 刘备
+			categoryRepository.save(parentCategory);/* 刘备 */
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

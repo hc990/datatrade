@@ -2,6 +2,9 @@ package com.toolstar.dto;
 
 import java.io.Serializable;
 
+/**
+ *
+ */
 public class CommodityDto implements Serializable {
 
 	/**

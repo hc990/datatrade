@@ -6,6 +6,7 @@ import com.mongodb.Mongo;
 
 public class MongoUtil {
 
+	@SuppressWarnings("deprecation")
 	public static DBCollection getDBCollection(String collectionName)
 			throws Exception {
 		Mongo m = new Mongo("localhost", 27017);

@@ -27,7 +27,7 @@ public class ETLMongoToMysql {
 				}
 				System.out.println(dbo.get("dsalesnumber"));  
 				String number = (String)dbo.get("dsalesnumber");
-				int num = Integer.valueOf(number.substring(0,number.indexOf("��")));
+				int num = Integer.parseInt(number.substring(0, number.indexOf("")));
 				if(num>z){
 					z = num;
 					p=(String)dbo.get("dname");
@@ -35,8 +35,6 @@ public class ETLMongoToMysql {
 				}
 				System.out.println(dbo.get("dbrand"));
 			}
-			
-			
 			System.out.println(i);
 			System.out.println(j);
 			System.out.println(z);
@@ -47,5 +45,4 @@ public class ETLMongoToMysql {
 			e.printStackTrace();
 		}
 	}
-
 }

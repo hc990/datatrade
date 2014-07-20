@@ -18,7 +18,7 @@ public class Commodity extends AbstractDocument {
 	private BigDecimal price;
 	private String imgUrl, categoryName;
 	
-	@Indexed(unique = true)
+//	@Indexed(unique = true)
 	private String parentTsNo;
 
 	@PersistenceConstructor
@@ -58,8 +58,7 @@ public class Commodity extends AbstractDocument {
 
 	/**
 	 * Return the {@link Customer}'s addresses.
-	 * 
-	 * @return
+	 *
 	 */
 	public Set<CommodityDescription> getCommodityDescriptions() {
 		return Collections.unmodifiableSet(commodityDescriptions);
